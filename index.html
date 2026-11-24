@@ -309,7 +309,7 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 580px;
+      min-height: max(580px, calc(100vh - 160px));
       border-left: var(--rule-light);
       border-right: var(--rule-light);
     }
