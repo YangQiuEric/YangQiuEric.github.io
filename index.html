@@ -2462,66 +2462,76 @@
           }
         }
 
-        // --- Lab 3: 3D Diffusion MRI -> Synthetic CT — Living Sweeping Optical Scan Cross-Section ---
+        // --- Lab 3: 3D Conditional Diffusion MRI -> CT — Airy Isometric Pastel 3D Volume Slices ---
         const g3 = prep(c3, force);
         if (g3) {
           const { ctx, w, h } = g3;
           ctx.fillStyle = '#eae1d3';
           ctx.fillRect(0, 0, w, h);
 
-          const boxW = Math.min(210, w * 0.66), boxH = h - 34;
-          const bx = (w - boxW) * 0.5, by = 17;
-          const cx = bx + boxW * 0.5, cy = by + boxH * 0.5;
-          const scanFrac = 0.5 + 0.34 * Math.sin(t * 0.95);
-          const scanX = bx + boxW * scanFrac;
+          // Soft ambient pastel glow matching Labs 1 & 2
+          const bg = ctx.createRadialGradient(w * 0.5, h * 0.5, 6, w * 0.5, h * 0.5, w * 0.45);
+          bg.addColorStop(0, 'rgba(203, 191, 240, 0.34)');
+          bg.addColorStop(0.55, 'rgba(244, 191, 162, 0.18)');
+          bg.addColorStop(1, 'rgba(184, 213, 242, 0)');
+          ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
 
-          // Base Right Side: Warm Synthetic CT (pastel bone/tissue contrast)
-          ctx.save();
-          ctx.beginPath(); ctx.roundRect(bx, by, boxW, boxH, 8); ctx.clip();
-          ctx.fillStyle = '#f8f4ec';
-          ctx.fillRect(bx, by, boxW, boxH);
-          ctx.fillStyle = '#f5d8c8';
-          ctx.beginPath(); ctx.ellipse(cx, cy, boxW * 0.38, boxH * 0.38, 0, 0, Math.PI * 2); ctx.fill();
-          ctx.strokeStyle = 'rgba(36,30,27,0.45)'; ctx.lineWidth = 0.9; ctx.stroke();
-          ctx.fillStyle = '#f8f4ec';
-          ctx.beginPath(); ctx.ellipse(cx - boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-          ctx.beginPath(); ctx.ellipse(cx + boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-          ctx.fillStyle = '#241e1b';
-          ctx.beginPath(); ctx.arc(cx, cy + boxH * 0.15, 6.5, 0, Math.PI * 2); ctx.fill();
+          // Draw 5 floating isometric 3D volume slices transitioning Periwinkle (MRI) -> Lilac -> Warm Peach (CT)
+          const slices = 5;
+          const cx = w * 0.50;
+          const sw = Math.min(138, w * 0.42);
+          const sh = 30;
+          const gapY = 14.5;
+          const startY = h * 0.5 + ((slices - 1) * gapY) * 0.5 + 2;
+          const activePos = (0.5 + 0.5 * Math.sin(t * 0.95)) * (slices - 1);
+          const SLICE_FILLS = ['#c6ddf5', '#d5d0f2', '#e4d3ec', '#f3d2c3', '#f7d8c4'];
 
-          // Left Clipped Side: Deep Espresso MRI Soft-Tissue Contrast
-          ctx.save();
-          ctx.beginPath(); ctx.rect(bx, by, scanX - bx, boxH); ctx.clip();
-          ctx.fillStyle = '#28221e';
-          ctx.fillRect(bx, by, boxW, boxH);
-          ctx.fillStyle = '#3f3631';
-          ctx.beginPath(); ctx.ellipse(cx, cy, boxW * 0.38, boxH * 0.38, 0, 0, Math.PI * 2); ctx.fill();
-          ctx.strokeStyle = '#dfd8f3'; ctx.lineWidth = 0.9; ctx.stroke();
-          ctx.fillStyle = '#241e1b';
-          ctx.beginPath(); ctx.ellipse(cx - boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-          ctx.beginPath(); ctx.ellipse(cx + boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-          ctx.fillStyle = '#f4bfa2';
-          ctx.beginPath(); ctx.arc(cx, cy + boxH * 0.15, 6.5, 0, Math.PI * 2); ctx.fill();
-          ctx.restore();
+          function drawIsoSlice(cy, fill, alpha, highlight) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - sh * 0.5);
+            ctx.lineTo(cx + sw * 0.5, cy);
+            ctx.lineTo(cx, cy + sh * 0.5);
+            ctx.lineTo(cx - sw * 0.5, cy);
+            ctx.closePath();
 
-          // Luminous sweeping scan line
-          const sg = ctx.createLinearGradient(scanX - 18, 0, scanX + 18, 0);
-          sg.addColorStop(0, 'rgba(203,191,240,0)');
-          sg.addColorStop(0.5, 'rgba(244,191,162,0.55)');
-          sg.addColorStop(1, 'rgba(184,213,242,0)');
-          ctx.fillStyle = sg; ctx.fillRect(scanX - 18, by, 36, boxH);
-          ctx.strokeStyle = '#f5d8c8'; ctx.lineWidth = 1.4;
-          ctx.beginPath(); ctx.moveTo(scanX, by); ctx.lineTo(scanX, by + boxH); ctx.stroke();
+            ctx.fillStyle = fill;
+            ctx.globalAlpha = alpha;
+            ctx.fill();
+            ctx.globalAlpha = 1;
 
-          // Crisp corner labels
+            ctx.strokeStyle = highlight > 0.5
+              ? `rgba(106, 77, 118, ${0.42 + highlight * 0.38})`
+              : 'rgba(36, 30, 27, 0.24)';
+            ctx.lineWidth = highlight > 0.5 ? 1.25 : 0.8;
+            ctx.stroke();
+
+            // Delicate inner anatomical contour ring on each 3D slice
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, sw * 0.22, sh * 0.22, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = highlight > 0.5
+              ? 'rgba(133, 79, 58, 0.55)'
+              : 'rgba(36, 30, 27, 0.16)';
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          for (let i = 0; i < slices; i++) {
+            const dist = Math.abs(i - activePos);
+            const hl = Math.max(0, 1 - dist * 0.9);
+            const lift = hl * 2.5;
+            const cy = startY - i * gapY - lift;
+            drawIsoSlice(cy, SLICE_FILLS[i], 0.62 + hl * 0.32, hl);
+          }
+
+          // Subtle modality labels on left & right margins matching site editorial typography
           ctx.font = '500 9.5px "IBM Plex Mono", monospace';
-          ctx.fillStyle = '#f3ede2'; ctx.textAlign = 'left'; ctx.fillText('MRI', bx + 10, by + 16);
-          ctx.fillStyle = '#241e1b'; ctx.textAlign = 'right'; ctx.fillText('CT', bx + boxW - 10, by + 16);
-          ctx.restore();
-
-          // Frame border
-          ctx.strokeStyle = 'rgba(36, 30, 27, 0.34)'; ctx.lineWidth = 0.9;
-          ctx.beginPath(); ctx.roundRect(bx, by, boxW, boxH, 8); ctx.stroke();
+          ctx.fillStyle = 'rgba(36, 30, 27, 0.50)';
+          ctx.textAlign = 'left';
+          ctx.fillText('MRI', 20, h - 14);
+          ctx.textAlign = 'right';
+          ctx.fillText('3D CT', w - 20, 22);
         }
 
         // --- Footer Bookend: Subtle Flowing Pastel Contour Ribbons on Dark Espresso ---
