@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eric Qiu — Recommendation Algorithm Engineer</title>
+  <meta name="description" content="Eric Qiu — Recommendation Algorithm Engineer at TikTok, incoming Machine Learning Engineer at Moloco. End-to-end retrieval, ranking, cold start, and value modeling." />
+  <meta property="og:title" content="Eric Qiu — Recommendation Algorithm Engineer" />
+  <meta property="og:description" content="End-to-end retrieval, ranking &amp; value modeling. TikTok · Incoming Moloco · UC San Diego · UW–Madison." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yangqiueric.github.io/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f4bfa2'/%3E%3Cstop offset='50%25' stop-color='%23cbbff0'/%3E%3Cstop offset='100%25' stop-color='%23b8d5f2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='3' y='3' width='26' height='26' rx='7' fill='url(%23g)' stroke='%23241e1b' stroke-width='2'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f3ede2;
+      --paper-bright: #f8f4ec;
+      --linen: #eae1d3;
+      --espresso: #241e1b;
+      --ink: #241e1b;
+      /* Higher WCAG-AA contrast muted ink on Oat Kraft paper */
+      --ink-muted: #4a413b;
+      --ink-subtle: #5f544c;
+      --ink-on-dark: #f3ede2;
+      --ink-on-dark-muted: rgba(243, 237, 226, 0.78);
+      --peach: #f4bfa2;
+      --peach-soft: #f5d8c8;
+      --lilac: #cbbff0;
+      --lilac-soft: #dfd8f3;
+      --periwinkle: #b8d5f2;
+      --plum-text: #6a4d76;
+      --terracotta-text: #854f3a;
+      --rule-light: 1px solid rgba(36, 30, 27, 0.16);
+      --rule-strong: 1px solid rgba(36, 30, 27, 0.34);
+      --rule-dark: 1px solid rgba(243, 237, 226, 0.18);
+      --serif: "Newsreader", Georgia, serif;
+      --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+      --max-w: 1220px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.62;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 44px;
+    }
+
+    /* ---------- HEADER / RECRUITER-FIRST NAV + MOBILE MENU ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(243, 237, 226, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: var(--rule-light);
+    }
+
+    .nav-inner {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-family: var(--serif);
+      font-size: 26px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 15px;
+      height: 15px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--peach), var(--lilac), var(--periwinkle));
+      border: 1px solid rgba(36, 30, 27, 0.35);
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-muted);
+    }
+
+    .nav-links a {
+      padding: 4px 0;
+      border-bottom: 1.5px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--espresso);
+      white-space: nowrap;
+    }
+
+    .btn-dark {
+      background: var(--espresso);
+      color: var(--paper);
+    }
+
+    .btn-dark:hover {
+      background: #14100e;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.38);
+      color: var(--ink);
+      border-color: rgba(36, 30, 27, 0.3);
+    }
+
+    .btn-outline:hover {
+      background: var(--linen);
+      border-color: var(--espresso);
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      border: 1px solid rgba(36, 30, 27, 0.24);
+      background: rgba(255, 255, 255, 0.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--espresso);
+      color: var(--paper);
+      border-color: var(--espresso);
+      transform: translateY(-1px);
+    }
+
+    /* Mobile Hamburger Button */
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      border: 1px solid rgba(36, 30, 27, 0.28);
+      background: rgba(255, 255, 255, 0.35);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .mobile-drawer {
+      display: none;
+      border-top: var(--rule-light);
+      background: var(--paper);
+      padding: 18px 24px 24px;
+    }
+
+    .mobile-drawer.is-open {
+      display: block;
+    }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .mobile-nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: var(--rule-light);
+    }
+
+    /* ---------- HERO (MOLOCO-STYLE 50/50 FULL-HEIGHT ARCHITECTURAL SPLIT) ---------- */
+    .hero {
+      padding: 0;
+      border-bottom: var(--rule-light);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 580px;
+      border-left: var(--rule-light);
+      border-right: var(--rule-light);
+    }
+
+    .hero-art {
+      min-height: 580px;
+      background: var(--linen);
+      border-right: var(--rule-light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      padding: 64px 56px 64px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--paper);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terracotta-text);
+      margin-bottom: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background: var(--plum-text);
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(54px, 5.2vw, 74px);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.024em;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.2vw, 31px);
+      font-weight: 400;
+      line-height: 1.24;
+      color: var(--ink-muted);
+      margin-bottom: 22px;
+      max-width: 500px;
+    }
+
+    .hero-tagline em {
+      font-style: italic;
+      color: var(--plum-text);
+    }
+
+    .hero-bio {
+      font-size: 15.5px;
+      line-height: 1.72;
+      color: var(--ink-muted);
+      max-width: 500px;
+      margin-bottom: 32px;
+    }
+
+    .hero-bio strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .social-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 6px;
+    }
+
+    .art-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ---------- INSTITUTIONAL RIBBON (COMPANIES & UNIVERSITIES ONLY — NO KAGGLE) ---------- */
+    .affil-strip {
+      padding: 28px 0;
+      border-bottom: var(--rule-light);
+      background: var(--paper-bright);
+    }
+
+    .affil-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .affil-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-subtle);
+      white-space: nowrap;
+    }
+
+    .affil-logos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      max-width: 860px;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .affil-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .affil-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .affil-sub {
+      font-size: 12px;
+      color: var(--ink-subtle);
+    }
+
+    /* ---------- DEEP ESPRESSO IMPACT BAND ---------- */
+    .impact-band {
+      background: var(--espresso);
+      color: var(--ink-on-dark);
+      padding: 64px 0 72px;
+    }
+
+    .impact-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      padding-bottom: 32px;
+      border-bottom: var(--rule-dark);
+    }
+
+    .impact-heading {
+      font-family: var(--serif);
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+    }
+
+    .impact-heading em {
+      font-style: italic;
+      color: var(--peach-soft);
+    }
+
+    .impact-sub {
+      font-size: 14.5px;
+      color: var(--ink-on-dark-muted);
+      max-width: 420px;
+      line-height: 1.62;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .impact-cell {
+      padding: 36px 26px 8px;
+      border-right: var(--rule-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .impact-cell:first-child { padding-left: 0; }
+    .impact-cell:last-child { border-right: none; padding-right: 0; }
+
+    .impact-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--lilac-soft);
+      margin-bottom: 16px;
+    }
+
+    .impact-num {
+      font-family: var(--serif);
+      font-size: 68px;
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      color: var(--peach-soft);
+      margin-bottom: 14px;
+    }
+
+    .impact-cell:nth-child(2) .impact-num { color: var(--lilac-soft); }
+    .impact-cell:nth-child(3) .impact-num { color: var(--periwinkle); }
+    .impact-cell:nth-child(4) .impact-num { color: var(--paper); }
+
+    .impact-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--paper);
+      margin-bottom: 6px;
+    }
+
+    .impact-detail {
+      font-size: 13.5px;
+      line-height: 1.58;
+      color: var(--ink-on-dark-muted);
+    }
+
+    /* ---------- EDITORIAL SECTIONS ---------- */
+    .ed-section {
+      padding: 80px 0;
+      border-bottom: var(--rule-light);
+    }
+
+    .sec-head {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 44px;
+      align-items: end;
+      margin-bottom: 44px;
+    }
+
+    .sec-title {
+      font-family: var(--serif);
+      font-size: 46px;
+      font-weight: 400;
+      line-height: 1.06;
+      letter-spacing: -0.015em;
+    }
+
+    .sec-desc {
+      font-size: 15.5px;
+      line-height: 1.68;
+      color: var(--ink-muted);
+      max-width: 540px;
+    }
+
+    /* ---------- EXPERIENCE ---------- */
+    .exp-list {
+      border-top: var(--rule-strong);
+    }
+
+    .exp-row {
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 48px;
+      padding: 40px 0;
+      border-bottom: var(--rule-light);
+    }
+
+    .exp-row:last-child { border-bottom: none; }
+
+    .exp-company {
+      font-family: var(--serif);
+      font-size: 32px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag-incoming {
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--espresso);
+      color: var(--peach-soft);
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    .exp-meta {
+      font-size: 13.5px;
+      color: var(--ink-subtle);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .stack-chip {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      background: var(--linen);
+      border: var(--rule-light);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .exp-role {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 25px;
+      color: var(--plum-text);
+      margin-bottom: 12px;
+    }
+
+    .exp-lead {
+      font-size: 15px;
+      color: var(--ink-muted);
+      line-height: 1.68;
+      margin-bottom: 18px;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .exp-bullets li {
+      position: relative;
+      padding-left: 18px;
+      font-size: 14.8px;
+      line-height: 1.68;
+      color: var(--ink-muted);
+    }
+
+    .exp-bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background: var(--plum-text);
+    }
+
+    .exp-bullets strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .kpi-pill {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      font-weight: 500;
+      background: var(--peach-soft);
+      color: var(--ink);
+      padding: 1px 7px;
+      border-radius: 4px;
+      margin: 0 2px;
+      white-space: nowrap;
+    }
+
+    .kpi-pill.lilac { background: var(--lilac-soft); }
+    .kpi-pill.blue { background: #d6e6f7; }
+
+    /* ---------- COLLAPSIBLE SYSTEM ARCHITECTURE INSIDE TIKTOK ---------- */
+    .arch-details {
+      margin-top: 26px;
+      background: var(--paper-bright);
+      border: var(--rule-light);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .arch-summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      transition: background 0.2s ease;
+    }
+
+    .arch-summary::-webkit-details-marker { display: none; }
+
+    .arch-summary:hover {
+      background: rgba(234, 225, 211, 0.55);
+    }
+
+    .arch-summary-hint {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--plum-text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .arch-chevron {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .arch-details[open] .arch-chevron {
+      transform: rotate(180deg);
+    }
+
+    .arch-body {
+      padding: 20px 22px 24px;
+      border-top: var(--rule-light);
+      background: var(--paper);
+    }
+
+    .domain-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .domain-box {
+      background: var(--paper-bright);
+      border: 1px solid rgba(36, 30, 27, 0.2);
+      border-radius: 8px;
+      padding: 14px 12px 18px;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .domain-box:hover,
+    .domain-box.is-active {
+      background: #ffffff;
+      border-color: rgba(36, 30, 27, 0.72);
+      box-shadow: 0 6px 18px rgba(36, 30, 27, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .domain-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .domain-sub {
+      font-size: 11.5px;
+      color: var(--ink-subtle);
+    }
+
+    .loop-badge {
+      position: absolute;
+      left: 50%;
+      bottom: -12px;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 1px solid rgba(36, 30, 27, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+    }
+
+    .domain-box.is-active .loop-badge {
+      background: var(--peach-soft);
+      border-color: var(--espresso);
+    }
+
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .loop-badge svg { animation: slowSpin 16s linear infinite; }
+    .domain-box.is-active .loop-badge svg { animation-duration: 7s; }
+
+    .arch-detail-bar {
+      background: var(--linen);
+      border: 1px solid rgba(36, 30, 27, 0.22);
+      border-radius: 8px;
+      height: 108px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .arch-glide-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25%;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--peach), var(--plum-text));
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 3;
+    }
+
+    .arch-panel {
+      position: absolute;
+      inset: 0;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+      transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .arch-panel.is-active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .arch-detail-kicker {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--plum-text);
+      margin-bottom: 4px;
+    }
+
+    .arch-detail-text {
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .arch-detail-kpi {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--paper-bright);
+      border: 1px solid rgba(36, 30, 27, 0.22);
+      padding: 7px 12px;
+      border-radius: 6px;
+      color: var(--ink);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .arch-foundation-svg {
+      width: 100%;
+      max-width: 760px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .ellipse-left, .ellipse-right {
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ---------- RESEARCH LABS & PUBLICATIONS ---------- */
+    .labs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 56px;
+    }
+
+    .lab-card {
+      background: var(--paper-bright);
+      border: var(--rule-light);
+      border-radius: 12px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .lab-tag {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--terracotta-text);
+      margin-bottom: 8px;
+    }
+
+    .lab-title {
+      font-family: var(--serif);
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .lab-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      margin-bottom: 18px;
+    }
+
+    .lab-foot {
+      border-top: var(--rule-light);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--ink-subtle);
+      font-weight: 500;
+    }
+
+    .pubs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .pub-card {
+      background: var(--paper-bright);
+      border: var(--rule-light);
+      border-radius: 12px;
+      padding: 28px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .pub-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(36, 30, 27, 0.36);
+    }
+
+    .pub-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .pub-num {
+      font-family: var(--serif);
+      font-size: 26px;
+      color: var(--plum-text);
+      line-height: 1;
+    }
+
+    .pub-badge {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: var(--ink);
+      background: var(--linen);
+      border: 1px solid rgba(36, 30, 27, 0.12);
+    }
+
+    .pub-badge.peach { background: var(--peach-soft); }
+    .pub-badge.lilac { background: var(--lilac-soft); }
+    .pub-badge.blue  { background: #d6e6f7; }
+
+    .pub-title {
+      font-family: var(--serif);
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .pub-foot {
+      padding-top: 14px;
+      border-top: var(--rule-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--ink-subtle);
+    }
+
+    .pub-link {
+      font-weight: 600;
+      color: var(--plum-text);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .pub-link:hover {
+      border-bottom-color: var(--plum-text);
+    }
+
+    /* ---------- EDUCATION, HONORS & TOOLKIT ---------- */
+    .cred-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: var(--rule-strong);
+    }
+
+    .cred-col {
+      padding: 34px 34px 8px 0;
+      border-right: var(--rule-light);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .cred-col:not(:first-child) { padding-left: 34px; }
+    .cred-col:last-child { border-right: none; padding-right: 0; }
+
+    .col-heading {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terracotta-text);
+    }
+
+    .edu-school {
+      font-family: var(--serif);
+      font-size: 25px;
+      color: var(--ink);
+      margin-bottom: 4px;
+      line-height: 1.15;
+    }
+
+    .edu-deg {
+      font-size: 14px;
+      color: var(--ink-muted);
+      margin-bottom: 3px;
+    }
+
+    .edu-date {
+      font-size: 13px;
+      color: var(--ink-subtle);
+    }
+
+    .stack-cat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stack-cat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-subtle);
+    }
+
+    .stack-cat-items {
+      font-size: 14.5px;
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    /* ---------- FOOTER / CONTACT (NO PRIVATE H-1B DISCLOSURE) ---------- */
+    footer {
+      background: var(--espresso);
+      color: var(--ink-on-dark);
+      padding: 64px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-title {
+      font-family: var(--serif);
+      font-size: 48px;
+      line-height: 1.04;
+      margin-bottom: 10px;
+    }
+
+    .footer-title em {
+      font-style: italic;
+      color: var(--peach-soft);
+    }
+
+    .footer-sub {
+      font-size: 14.5px;
+      color: var(--ink-on-dark-muted);
+    }
+
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 14px;
+    }
+
+    .footer-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-peach {
+      background: var(--peach-soft);
+      color: var(--espresso);
+      border-color: var(--peach-soft);
+    }
+
+    .btn-peach:hover { background: var(--peach); }
+
+    .btn-ghost-dark {
+      background: transparent;
+      color: var(--paper);
+      border-color: rgba(243, 237, 226, 0.34);
+    }
+
+    .btn-ghost-dark:hover { border-color: var(--paper); }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      font-size: 13.5px;
+      color: var(--ink-on-dark-muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--peach-soft);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--espresso);
+      color: var(--peach-soft);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 18px;
+      border-radius: 6px;
+      border: 1px solid rgba(245, 216, 200, 0.35);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 100;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ---------- RESPONSIVE (REAL MOBILE NAVIGATION!) ---------- */
+    @media (max-width: 1024px) {
+      .container { padding: 0 24px; }
+      .nav-links, .nav-right { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .hero-grid,
+      .sec-head,
+      .exp-row,
+      .labs-grid,
+      .pubs-grid,
+      .cred-3col,
+      .domain-row {
+        grid-template-columns: 1fr;
+      }
+      .hero-grid { border-left: none; border-right: none; min-height: auto; }
+      .hero-grid > div { min-width: 0; }
+      .eyebrow { flex-wrap: wrap; line-height: 1.5; }
+      .social-row { margin-left: 0; }
+      .hero-art { min-height: 360px; border-right: none; border-bottom: var(--rule-light); }
+      .hero-copy { padding: 40px 4px 48px; }
+      .impact-top { flex-direction: column; align-items: flex-start; }
+      .impact-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-cell { border-bottom: var(--rule-dark); padding: 28px 16px; }
+      .arch-detail-bar { height: auto; min-height: 150px; }
+      .arch-panel { flex-direction: column; align-items: flex-start; justify-content: center; padding: 18px; }
+      .cred-col, .cred-col:not(:first-child) {
+        padding: 26px 0;
+        border-right: none;
+        border-bottom: var(--rule-light);
+      }
+      .cred-col:last-child { border-bottom: none; }
+      .footer-right { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- RECRUITER-FIRST STICKY NAVIGATION -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <span class="brand-mark"></span>
+        <span>Eric Qiu</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#experience">Experience</a>
+        <a href="#research">Research</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-right">
+        <a class="icon-btn" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4V9z"/></svg>
+        </a>
+        <button class="btn btn-dark" onclick="copyEmail()">Email</button>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="4" y1="7" x2="20" y2="7" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="17" x2="20" y2="17" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-nav-list">
+        <a href="#experience" onclick="closeDrawer()">Experience</a>
+        <a href="#research" onclick="closeDrawer()">Research &amp; Publications</a>
+        <a href="#education" onclick="closeDrawer()">Education &amp; Honors</a>
+        <a href="#contact" onclick="closeDrawer()">Contact</a>
+      </div>
+      <div class="mobile-nav-actions">
+        <button class="btn btn-dark" onclick="copyEmail(); closeDrawer();">Copy Email</button>
+        <a class="btn btn-outline" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 01. HERO (MOLOCO-ALIGNED 50/50 FULL-HEIGHT SPLIT: GRAND ART LEFT, EDITORIAL COPY RIGHT) -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left 50%: Grand Full-Height Living 9-Layer Luminous Pastel Sculpture -->
+        <div class="hero-art" id="heroArt" aria-hidden="true">
+          <canvas class="art-canvas" id="manifoldCanvas"></canvas>
+        </div>
+
+        <!-- Right 50%: Clean Editorial Introduction -->
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>Recommendation Algorithm Engineer · Bay Area</span>
+          </div>
+          <h1 class="hero-name">Eric Qiu</h1>
+          <p class="hero-tagline">
+            End-to-end <em>retrieval, ranking</em> &amp; value modeling.
+          </p>
+          <p class="hero-bio">
+            Recommendation Algorithm Engineer at <strong>TikTok</strong> working end to end across retrieval, ranking, cold start, and value modeling for TikTok’s U.S. informational ecosystem — joining <strong>Moloco</strong> in January 2027. Background of 4 published papers spanning applied ML, medical imaging, urban computing, and health systems.
+          </p>
+          <div class="hero-actions">
+            <a href="#experience" class="btn btn-dark">Explore Experience</a>
+            <button class="btn btn-outline" onclick="copyEmail()">Copy Email</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. INSTITUTIONAL AFFILIATION RIBBON (COMPANIES & UNIVERSITIES ONLY) -->
+  <div class="affil-strip">
+    <div class="container affil-inner">
+      <div class="affil-label">Experience &amp; research across</div>
+      <div class="affil-logos">
+        <div class="affil-item">
+          <span class="affil-name">Moloco</span>
+          <span class="affil-sub">Incoming ML Eng · 2027</span>
+        </div>
+        <div class="affil-item">
+          <span class="affil-name">TikTok</span>
+          <span class="affil-sub">RecSys Algorithm</span>
+        </div>
+        <div class="affil-item">
+          <span class="affil-name">Tencent IEG</span>
+          <span class="affil-sub">Data Science · PUBG</span>
+        </div>
+        <div class="affil-item">
+          <span class="affil-name">UC San Diego</span>
+          <span class="affil-sub">M.S. CSE · AI Lab</span>
+        </div>
+        <div class="affil-item">
+          <span class="affil-name">UW–Madison</span>
+          <span class="affil-sub">B.S. CS/DS · 2 Labs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03. MONUMENTAL IMPACT BAND (SINGLE AUTHORITATIVE METRICS SUMMARY) -->
+  <section class="impact-band">
+    <div class="container">
+      <div class="impact-top">
+        <h2 class="impact-heading">
+          Measured impact across <em>production &amp; research</em>
+        </h2>
+        <p class="impact-sub">
+          Online A/B gains from TikTok’s U.S. recommendation stack alongside peer-reviewed machine learning benchmarks and Kaggle honors.
+        </p>
+      </div>
+
+      <div class="impact-grid">
+        <div class="impact-cell">
+          <div class="impact-tag">01 · Post-Search</div>
+          <div class="impact-num">+35%</div>
+          <div class="impact-title">Query Coverage (10 Views)</div>
+          <p class="impact-detail">
+            Two-channel recall + client real-time passthrough cutting i2i latency from 40+ min to seconds; +14.5% comment/play.
+          </p>
+        </div>
+
+        <div class="impact-cell">
+          <div class="impact-tag">02 · Cold-Start</div>
+          <div class="impact-num">~3×</div>
+          <div class="impact-title">Posts Reaching 1K / 1h</div>
+          <p class="impact-detail">
+            Co-designed per-business HNSW over shared two-tower retrieval; +2.7% publish days/active creator and ~19% more publishing per unit of traffic than generic cold start.
+          </p>
+        </div>
+
+        <div class="impact-cell">
+          <div class="impact-tag">03 · Attribution</div>
+          <div class="impact-num">+1.43%</div>
+          <div class="impact-title">Proactive Publishes / User</div>
+          <p class="impact-detail">
+            User-conditioned attention over 1K-length watch sequences (+0.9% AUC) with marginal uplift objective P(pub|h+g) − P(pub|h).
+          </p>
+        </div>
+
+        <div class="impact-cell">
+          <div class="impact-tag">04 · Scholarship</div>
+          <div class="impact-num">04</div>
+          <div class="impact-title">Published Papers</div>
+          <p class="impact-detail">
+            Published in Cities (JCR Q1), IEEE EMBS, ICMIP ’23, and AAPM ’23 across urban computing, medical imaging, and health systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. INDUSTRY EXPERIENCE (WITH COLLAPSIBLE TIKTOK SYSTEM ARCHITECTURE) -->
+  <section class="ed-section" id="experience">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span><span>01 · Career Trajectory</span></div>
+          <h2 class="sec-title">Experience</h2>
+        </div>
+        <p class="sec-desc">
+          End-to-end production machine learning across U.S. consumer recommendation and real-time multi-layer content &amp; graph safety systems.
+        </p>
+      </div>
+
+      <div class="exp-list">
+        <!-- Moloco -->
+        <article class="exp-row">
+          <div>
+            <div class="exp-company">
+              <span>Moloco</span>
+              <span class="tag-incoming">Incoming · Jan 2027</span>
+            </div>
+            <div class="exp-meta">Menlo Park, CA · Starting Jan 2027</div>
+          </div>
+          <div>
+            <h3 class="exp-role">Machine Learning Engineer</h3>
+            <p class="exp-lead" style="margin-bottom: 0;">
+              Joining Moloco in Menlo Park as a Machine Learning Engineer starting January 2027.
+            </p>
+          </div>
+        </article>
+
+        <!-- TikTok -->
+        <article class="exp-row">
+          <div>
+            <div class="exp-company">TikTok</div>
+            <div class="exp-meta">San Jose, CA · Dec 2024 – Present</div>
+            <div class="chip-group">
+              <span class="stack-chip">Two-Tower</span>
+              <span class="stack-chip">HNSW</span>
+              <span class="stack-chip">1K-Seq Attention</span>
+              <span class="stack-chip">Uplift Modeling</span>
+              <span class="stack-chip">PyTorch</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="exp-role">Recommendation Algorithm Engineer</h3>
+            <p class="exp-lead">
+              Own the full recommendation stack for TikTok’s U.S. informational photo-text ecosystem — retrieval, pre-ranking, ranking, multi-format mixing, cold start, and creator-side experience.
+            </p>
+            <ul class="exp-bullets">
+              <li>
+                <strong>Two-Channel Post-Search Architecture:</strong> Separated fresh explicit intent from long-term interest generalization via unified query/behavior triggers and client-side real-time passthrough, cutting i2i trigger latency from <span class="kpi-pill">40+ min → sec</span>. Delivered <span class="kpi-pill">+35% query coverage</span> within 10 views, <span class="kpi-pill lilac">+14.5% comment/play</span>, <span class="kpi-pill blue">+11.6% share/play</span>, <span class="kpi-pill">−3.6% skip/play</span>, and <span class="kpi-pill lilac">+0.007% LT</span>.
+              </li>
+              <li>
+                <strong>Implicit Publish Attribution &amp; Marginal Uplift:</strong> Replaced last-watched attribution (only 3% true weight on original “+” posts) with user-conditioned attention over 1K-length watch sequences (<span class="kpi-pill lilac">+0.9% AUC</span>) and reformulated the objective to marginal uplift <em>P(pub|h+g) − P(pub|h)</em>, driving <span class="kpi-pill">+1.43% proactive publishes/user</span> (watch time &amp; retention neutral).
+              </li>
+              <li>
+                <strong>Multi-Business Vertical Cold-Start Infrastructure:</strong> Co-designed the U.S. vertical cold-start pipeline, extending business-level ratio control and independent value targets across recall → pre-rank → rank with per-business HNSW indexes over a shared two-tower retriever. Piloted on Info Photo-Text (65K candidate pool): <span class="kpi-pill blue">+2.7% publish days/creator</span>, <span class="kpi-pill">~3× posts at 1K views/1h</span>, and <span class="kpi-pill lilac">~19% more publishing/traffic</span> than generic cold start (watch time neutral).
+              </li>
+            </ul>
+
+            <!-- Collapsible Interactive System Architecture Diagram (Nested cleanly under TikTok!) -->
+            <details class="arch-details">
+              <summary class="arch-summary">
+                <span>Interactive System Architecture — TikTok U.S. Recommendation Stack</span>
+                <span class="arch-summary-hint">
+                  <span>Inspect 4 modules</span>
+                  <span class="arch-chevron">▾</span>
+                </span>
+              </summary>
+              <div class="arch-body">
+                <div class="domain-row" id="domainRow">
+                  <div class="domain-box is-active" data-stage="0">
+                    <div class="domain-title">Two-Channel Recall</div>
+                    <div class="domain-sub">Fresh Intent vs. Long-Term</div>
+                    <div class="loop-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+                        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="domain-box" data-stage="1">
+                    <div class="domain-title">Per-Business HNSW</div>
+                    <div class="domain-sub">Shared Two-Tower · 65K Pilot</div>
+                    <div class="loop-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+                        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="domain-box" data-stage="2">
+                    <div class="domain-title">1K-Seq Attribution</div>
+                    <div class="domain-sub">User-Conditioned Attention</div>
+                    <div class="loop-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+                        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="domain-box" data-stage="3">
+                    <div class="domain-title">Marginal Uplift</div>
+                    <div class="domain-sub">P(pub|h+g) − P(pub|h)</div>
+                    <div class="loop-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+                        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="arch-detail-bar">
+                  <div class="arch-glide-bar" id="archGlideBar"></div>
+                  <div class="arch-panel is-active">
+                    <div>
+                      <div class="arch-detail-kicker">Real-Time Signals · Post-Search Recall</div>
+                      <div class="arch-detail-text">Unified query/behavior triggers + client-side real-time passthrough separating fresh search intent from long-term generalization (40+ min → sec).</div>
+                    </div>
+                    <div class="arch-detail-kpi">+35% query cov</div>
+                  </div>
+                  <div class="arch-panel">
+                    <div>
+                      <div class="arch-detail-kicker">Cold-Start Infra · Per-Business HNSW</div>
+                      <div class="arch-detail-text">Co-designed per-business HNSW indexes over a shared two-tower retriever with business-level ratio control across recall → pre-rank → rank (~19% more publishing/traffic than generic cold start).</div>
+                    </div>
+                    <div class="arch-detail-kpi">~3× 1K views/1h</div>
+                  </div>
+                  <div class="arch-panel">
+                    <div>
+                      <div class="arch-detail-kicker">Sequence Modeling · 1K-Length Attribution</div>
+                      <div class="arch-detail-text">User-conditioned attention over 1K-length watch histories replacing noisy last-watched credit on original “+” posts.</div>
+                    </div>
+                    <div class="arch-detail-kpi">+0.9% AUC</div>
+                  </div>
+                  <div class="arch-panel">
+                    <div>
+                      <div class="arch-detail-kicker">Value Modeling · Marginal Uplift</div>
+                      <div class="arch-detail-text">Reformulated production objective to marginal uplift P(pub|h+g) − P(pub|h), fixing under-incentivization of low-frequency creators.</div>
+                    </div>
+                    <div class="arch-detail-kpi">+1.43% publishes</div>
+                  </div>
+                </div>
+
+                <svg class="arch-foundation-svg" viewBox="0 0 860 205" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="overlapWash" x1="360" y1="42" x2="500" y2="195" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#f6bca0" stop-opacity="0.9" />
+                      <stop offset="52%" stop-color="#cbbff0" stop-opacity="0.86" />
+                      <stop offset="100%" stop-color="#b8d5f2" stop-opacity="0.9" />
+                    </linearGradient>
+                    <clipPath id="clipLeftEllipse"><ellipse cx="265" cy="116" rx="235" ry="72" /></clipPath>
+                  </defs>
+                  <line x1="430" y1="0" x2="430" y2="62" stroke="#241e1b" stroke-opacity="0.32" stroke-width="1" stroke-dasharray="2.5 3" />
+                  <circle cx="430" cy="3" r="2.3" fill="#241e1b" fill-opacity="0.55" />
+                  <circle cx="430" cy="62" r="2.3" fill="#241e1b" fill-opacity="0.7" />
+                  <g id="ellLeftGroup" class="ellipse-left">
+                    <ellipse cx="265" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.7" stroke-width="1.1" fill="#f8f4ec" fill-opacity="0.55" />
+                    <text x="205" y="109" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="22" fill="#241e1b">Deep Learning Models</text>
+                    <text x="205" y="131" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#4a413b">Two-Tower · Attention · Uplift · Multi-Obj Fusion</text>
+                  </g>
+                  <g id="ellRightGroup" class="ellipse-right">
+                    <ellipse cx="595" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.7" stroke-width="1.1" fill="#f8f4ec" fill-opacity="0.55" />
+                    <text x="655" y="109" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="22" fill="#241e1b">Retrieval &amp; Serving Infra</text>
+                    <text x="655" y="131" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#4a413b">HNSW Indexes · PyTorch · Spark · A/B</text>
+                  </g>
+                  <ellipse cx="595" cy="116" rx="235" ry="72" fill="url(#overlapWash)" clip-path="url(#clipLeftEllipse)" />
+                  <ellipse cx="265" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.65" stroke-width="1.05" fill="none" />
+                  <ellipse cx="595" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.65" stroke-width="1.05" fill="none" />
+                  <text x="430" y="113" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="19" font-style="italic" fill="#241e1b">Core ML</text>
+                  <text x="430" y="130" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#241e1b">END-TO-END</text>
+                </svg>
+              </div>
+            </details>
+          </div>
+        </article>
+
+        <!-- Tencent -->
+        <article class="exp-row">
+          <div>
+            <div class="exp-company">Tencent IEG</div>
+            <div class="exp-meta">Shenzhen, CN · Jun – Sep 2024</div>
+            <div class="chip-group">
+              <span class="stack-chip">Hunyuan LLM</span>
+              <span class="stack-chip">XGBoost</span>
+              <span class="stack-chip">Aho-Corasick</span>
+              <span class="stack-chip">HITS &amp; Fraudar</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="exp-role">Data Scientist, Intern</h3>
+            <ul class="exp-bullets">
+              <li>
+                <strong>Multi-Level Real-Time Content Filter (PUBG):</strong> Rebuilt a 3-stage pipeline combining Aho-Corasick + prefix-tree millisecond matching, TF-IDF + XGBoost mid-layer classification, and a fine-tuned Hunyuan LLM decision layer. Serves <span class="kpi-pill blue">millions of msgs/day</span> at <span class="kpi-pill">+9% harmful-content detection</span>.
+              </li>
+              <li>
+                <strong>Graph-Based Fraudulent Review Detection:</strong> Shipped HITS label propagation and extended Fraudar twice — Fibonacci-heap volume-weighted edges plus top-3 repeated-comment anomaly scores — reducing manual review rate by <span class="kpi-pill lilac">−9.83%</span>.
+              </li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. RESEARCH LABS & PUBLICATIONS (SINGLE DEDUPLICATED SECTION) -->
+  <section class="ed-section" id="research">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span><span>02 · Scholarship</span></div>
+          <h2 class="sec-title">Research &amp; Publications</h2>
+        </div>
+        <p class="sec-desc">
+          Applied ML research across three university labs at UC San Diego and UW–Madison, spanning clinical NLP benchmarks, spatial computer vision, and 3D diffusion imaging.
+        </p>
+      </div>
+
+      <div class="labs-grid">
+        <div class="lab-card">
+          <div>
+            <div class="lab-tag">UC San Diego · AI Data Analytics Lab</div>
+            <h3 class="lab-title">Clinical LLM Evaluation Benchmark</h3>
+            <p class="lab-desc">
+              Proposed an evaluation framework overcoming BLEU/ROUGE limits in medical NLP; collected <strong>3,500 pathology reports</strong> from UCSD Medical Center with radiologist ground truth across 6 disease entities and built structured extraction LLM pipelines.
+            </p>
+          </div>
+          <div class="lab-foot">
+            <span>3,500 reports · 6 entities</span>
+            <span>2023 – 2024</span>
+          </div>
+        </div>
+
+        <div class="lab-card">
+          <div>
+            <div class="lab-tag">UW–Madison · Spatial Mining Lab</div>
+            <h3 class="lab-title">Urban Vision &amp; Multi-Gate MoE</h3>
+            <p class="lab-desc">
+              Built a point-scale urban wealth prediction system running Swin Transformer over <strong>110,000+ street-view images</strong> with spatial-temporal TrueSkill (<strong>+15% accuracy</strong>), plus a 5-expert MMoE generalizing across NYC, Boston &amp; LA.
+            </p>
+          </div>
+          <div class="lab-foot">
+            <span>Middle-class F1 0.73 → 0.88</span>
+            <span>2022 – 2023</span>
+          </div>
+        </div>
+
+        <div class="lab-card">
+          <div>
+            <div class="lab-tag">UW–Madison · Human Oncology</div>
+            <h3 class="lab-title">3D Conditional Diffusion MRI→CT</h3>
+            <p class="lab-desc">
+              Applied 3D DDIM and Pix2Pix to MRI→CT translation; cut GPU memory via additive skip connections and full-dimensional ramp positional embeddings trained on 128×128×32 patches for arbitrary-size volumes.
+            </p>
+          </div>
+          <div class="lab-foot">
+            <span>Spine DICE 0.80</span>
+            <span>2022 – 2023</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Publications (Dropped "Selected", added clickable Scholar/DOI links) -->
+      <div>
+        <h3 class="sec-title" style="font-size: 36px; margin-bottom: 26px;">Publications</h3>
+        <div class="pubs-grid">
+          <article class="pub-card">
+            <div>
+              <div class="pub-card-top">
+                <span class="pub-num">01</span>
+                <span class="pub-badge peach">Cities (JCR Q1) · 2024</span>
+              </div>
+              <h4 class="pub-title">Do You Know Your Neighborhood? Integrating Street View Images and Multi-task Learning for Fine-Grained Multi-Class Neighborhood Wealthiness Perception Prediction.</h4>
+            </div>
+            <div class="pub-foot">
+              <span>Qiu Y., Wu M., Huang Q.</span>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Do+You+Know+Your+Neighborhood+Integrating+Street+View+Images+and+Multi-task+Learning" target="_blank" rel="noopener">DOI / Paper ↗</a>
+            </div>
+          </article>
+
+          <article class="pub-card">
+            <div>
+              <div class="pub-card-top">
+                <span class="pub-num">02</span>
+                <span class="pub-badge lilac">IEEE EMBS · 2024</span>
+              </div>
+              <h4 class="pub-title">Development of a Voice-Enabled Automated Sleep Survey System.</h4>
+            </div>
+            <div class="pub-foot">
+              <span>Qiu Y., et al.</span>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Development+of+a+Voice-Enabled+Automated+Sleep+Survey+System+Qiu" target="_blank" rel="noopener">DOI / Paper ↗</a>
+            </div>
+          </article>
+
+          <article class="pub-card">
+            <div>
+              <div class="pub-card-top">
+                <span class="pub-num">03</span>
+                <span class="pub-badge blue">ICMIP ’23 · pp. 34–39</span>
+              </div>
+              <h4 class="pub-title">UPerNet-Based Deep Learning Method for the Segmentation of Gastrointestinal Tract Images.</h4>
+            </div>
+            <div class="pub-foot">
+              <span>Qiu Y. (Sole Author)</span>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=UPerNet-Based+Deep+Learning+Method+for+the+Segmentation+of+Gastrointestinal+Tract+Images" target="_blank" rel="noopener">DOI / Paper ↗</a>
+            </div>
+          </article>
+
+          <article class="pub-card">
+            <div>
+              <div class="pub-card-top">
+                <span class="pub-num">04</span>
+                <span class="pub-badge">AAPM 65th · 2023</span>
+              </div>
+              <h4 class="pub-title">Deep Learning Methodology to Generate Synthetic CT for MR-Guided Radiation Therapy in the Thorax: A Feasibility Study.</h4>
+            </div>
+            <div class="pub-foot">
+              <span>Qiu Y., Yan Y., Glide-Hurst C.</span>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Deep+Learning+Methodology+to+Generate+Synthetic+CT+for+MR-Guided+Radiation+Therapy+in+the+Thorax" target="_blank" rel="noopener">DOI / Paper ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06. EDUCATION, HONORS (KAGGLE) & TOOLKIT -->
+  <section class="ed-section" id="education" style="padding: 76px 0;">
+    <div class="container">
+      <div class="sec-head" style="margin-bottom: 34px;">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span><span>03 · Credentials</span></div>
+          <h2 class="sec-title">Education, Honors &amp; Toolkit</h2>
+        </div>
+        <p class="sec-desc">
+          Computer science and data science training at UC San Diego and UW–Madison, competitive ML medals on Kaggle, and core engineering stack.
+        </p>
+      </div>
+
+      <div class="cred-3col">
+        <div class="cred-col">
+          <div class="col-heading">Education</div>
+          <div>
+            <div class="edu-school">UC San Diego</div>
+            <div class="edu-deg">M.S. Computer Science &amp; Engineering · <strong>GPA 3.93 / 4.0</strong></div>
+            <div class="edu-date">La Jolla, CA · Sep 2023 – Dec 2024</div>
+          </div>
+          <div>
+            <div class="edu-school">UW–Madison</div>
+            <div class="edu-deg">B.S. Computer Science &amp; Data Science · <strong>GPA 3.97 / 4.0</strong></div>
+            <div class="edu-date">Madison, WI · Sep 2020 – Jun 2023</div>
+          </div>
+        </div>
+
+        <div class="cred-col">
+          <div class="col-heading">Honors · Kaggle</div>
+          <div>
+            <div class="edu-school" style="font-size: 22px;">Google Smartphone Decimeter</div>
+            <div class="edu-deg"><strong>Kaggle Silver</strong> · Top 6% (30 / 573)</div>
+            <div class="edu-date">+30% GNSS positioning accuracy · KDTree + Gaussian–Kalman</div>
+          </div>
+          <div>
+            <div class="edu-school" style="font-size: 22px;">UW–Madison GI Tract Segmentation</div>
+            <div class="edu-deg"><strong>Kaggle Bronze</strong> · Top 9% (135 / 1548)</div>
+            <div class="edu-date">2.5D UPerNet · EfficientNet &amp; Swin Transformer backbones</div>
+          </div>
+        </div>
+
+        <div class="cred-col">
+          <div class="col-heading">Technical Stack</div>
+          <div class="stack-cat">
+            <span class="stack-cat-label">Languages</span>
+            <span class="stack-cat-items">Python · C / C++ · Java</span>
+          </div>
+          <div class="stack-cat">
+            <span class="stack-cat-label">ML &amp; Modeling</span>
+            <span class="stack-cat-items">PyTorch · Two-Tower · Uplift · MMoE · LLMs · 3D Diffusion</span>
+          </div>
+          <div class="stack-cat">
+            <span class="stack-cat-label">Retrieval &amp; Data Infrastructure</span>
+            <span class="stack-cat-items">HNSW · Apache Spark · XGBoost · Data Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07. CONTACT FOOTER (CLEAN, PUBLIC-SAFE, NO WORK-AUTH DISCLOSURE) -->
+  <footer id="contact">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-title">Get in <em>touch.</em></div>
+        <div class="footer-sub">Eric Qiu · Recommendation Algorithm Engineer · Bay Area, CA</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-btn-row">
+          <button class="btn btn-peach" onclick="copyEmail()">Copy ericqiuyang99@gmail.com</button>
+        </div>
+        <div class="footer-links">
+          <a href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Copied ericqiuyang99@gmail.com to clipboard</div>
+
+  <script>
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    // 1. Mobile Navigation Drawer
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    function closeDrawer() {
+      mobileDrawer?.classList.remove('is-open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+    }
+    menuToggle?.addEventListener('click', () => {
+      const open = mobileDrawer.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // 2. Hero Pure Living 2D Pastel Topography
+    (function initLivingTopography() {
+      const container = document.getElementById('heroArt');
+      const canvas = document.getElementById('manifoldCanvas');
+      if (!container || !canvas) return;
+
+      const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+      container.addEventListener('mousemove', (e) => {
+        const r = container.getBoundingClientRect();
+        pointer.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        pointer.ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      });
+      container.addEventListener('mouseleave', () => { pointer.tx = 0; pointer.ty = 0; });
+
+      function traceLayer(ctx, cx, cy, rx, ry, t, layerIdx, totalLayers) {
+        const steps = 128;
+        const phase = t * 1.0 - layerIdx * 0.42;
+        const morphAmp = 0.13 + (layerIdx / totalLayers) * 0.045;
+        ctx.beginPath();
+        for (let i = 0; i <= steps; i++) {
+          const a = (i / steps) * Math.PI * 2;
+          const rMod =
+            1 +
+            morphAmp * Math.sin(a * 2 + phase * 1.12) +
+            (morphAmp * 0.58) * Math.cos(a * 3 - phase * 0.82 + layerIdx * 0.5) +
+            (morphAmp * 0.24) * Math.sin(a * 4 + phase * 0.62);
+          const rot = 0.24 * Math.sin(t * 0.42 + layerIdx * 0.22);
+          const lx = Math.cos(a) * rx * rMod;
+          const ly = Math.sin(a) * ry * rMod;
+          const x = cx + lx * Math.cos(rot) - ly * Math.sin(rot);
+          const y = cy + lx * Math.sin(rot) + ly * Math.cos(rot);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+      }
+
+      // 9 Rich Luminous Pastel Strata (Grand Gallery Scale: Periwinkle -> Violet-Lilac -> Rose-Peach -> Glowing Cream Core)
+      const LAYERS = [
+        { scale: 1.00, shift: 0.00, grad: ['#a9cef5', '#cbbff4'], alpha: 0.36, stroke: 0.20 },
+        { scale: 0.89, shift: 0.11, grad: ['#b7c8f5', '#d9bff0'], alpha: 0.44, stroke: 0.23 },
+        { scale: 0.78, shift: 0.23, grad: ['#c6bff2', '#e8bddd'], alpha: 0.52, stroke: 0.26 },
+        { scale: 0.67, shift: 0.35, grad: ['#d7bce8', '#f3bba8'], alpha: 0.60, stroke: 0.29 },
+        { scale: 0.56, shift: 0.48, grad: ['#e7bad3', '#f7b997'], alpha: 0.70, stroke: 0.33 },
+        { scale: 0.45, shift: 0.61, grad: ['#f3ba9f', '#fac798'], alpha: 0.78, stroke: 0.37 },
+        { scale: 0.34, shift: 0.74, grad: ['#f8c399', '#fdd7ab'], alpha: 0.86, stroke: 0.42 },
+        { scale: 0.23, shift: 0.87, grad: ['#fbd6ad', '#feebd0'], alpha: 0.92, stroke: 0.46 },
+        { scale: 0.13, shift: 0.98, grad: ['#feebd0', '#fff9ee'], alpha: 0.96, stroke: 0.50 }
+      ];
+
+      let t = 0;
+      function frame() {
+        t += 0.016;
+        pointer.x += (pointer.tx - pointer.x) * 0.05;
+        pointer.y += (pointer.ty - pointer.y) * 0.05;
+
+        const rect = container.getBoundingClientRect();
+        const w = Math.max(1, rect.width);
+        const h = Math.max(1, rect.height);
+        if (canvas.width !== Math.round(w * DPR) || canvas.height !== Math.round(h * DPR)) {
+          canvas.width = Math.round(w * DPR);
+          canvas.height = Math.round(h * DPR);
+        }
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+        ctx.fillStyle = '#eae1d3';
+        ctx.fillRect(0, 0, w, h);
+
+        const baseCx = w * 0.50, baseCy = h * 0.50;
+        const driftX = Math.sin(t * 0.68) * w * 0.085 + pointer.x * 42;
+        const driftY = Math.cos(t * 0.54) * h * 0.075 + pointer.y * 36;
+
+        // Dual luminous pastel silk blooms so the stage radiates gallery warmth
+        const halo1 = ctx.createRadialGradient(
+          baseCx + driftX * 0.75 - 24, baseCy + driftY * 0.75 - 18, 16,
+          baseCx + driftX * 0.4, baseCy + driftY * 0.4, Math.max(w, h) * 0.56
+        );
+        halo1.addColorStop(0, 'rgba(250, 200, 162, 0.72)');
+        halo1.addColorStop(0.52, 'rgba(208, 190, 244, 0.36)');
+        halo1.addColorStop(1, 'rgba(184, 213, 242, 0)');
+        ctx.fillStyle = halo1;
+        ctx.fillRect(0, 0, w, h);
+
+        const halo2 = ctx.createRadialGradient(
+          baseCx - driftX * 0.5 + 36, baseCy - driftY * 0.5 + 24, 12,
+          baseCx, baseCy, Math.max(w, h) * 0.52
+        );
+        halo2.addColorStop(0, 'rgba(168, 208, 248, 0.52)');
+        halo2.addColorStop(0.6, 'rgba(208, 190, 244, 0.20)');
+        halo2.addColorStop(1, 'rgba(168, 208, 248, 0)');
+        ctx.fillStyle = halo2;
+        ctx.fillRect(0, 0, w, h);
+
+        const maxRx = w * 0.42, maxRy = h * 0.38;
+        for (let i = 0; i < LAYERS.length; i++) {
+          const L = LAYERS[i];
+          const cx = baseCx + driftX * L.shift;
+          const cy = baseCy + driftY * L.shift;
+          const rx = maxRx * L.scale, ry = maxRy * L.scale;
+          traceLayer(ctx, cx, cy, rx, ry, t, i, LAYERS.length);
+
+          const ang = t * 0.42 + i * 0.55;
+          const grad = ctx.createLinearGradient(
+            cx - Math.cos(ang) * rx, cy - Math.sin(ang) * ry,
+            cx + Math.cos(ang) * rx, cy + Math.sin(ang) * ry
+          );
+          grad.addColorStop(0, L.grad[0]);
+          grad.addColorStop(1, L.grad[1]);
+          ctx.save();
+          ctx.globalAlpha = L.alpha;
+          ctx.fillStyle = grad;
+          ctx.fill();
+          ctx.restore();
+
+          ctx.strokeStyle = `rgba(36, 30, 27, ${L.stroke})`;
+          ctx.lineWidth = i === LAYERS.length - 1 ? 1.05 : 0.82;
+          ctx.stroke();
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+
+    // 3. Collapsible TikTok Architecture Inspector (Zero-Jitter Crossfade)
+    (function initArchitectureInspector() {
+      const boxes = Array.from(document.querySelectorAll('#domainRow .domain-box'));
+      const panels = Array.from(document.querySelectorAll('.arch-detail-bar .arch-panel'));
+      const glideBar = document.getElementById('archGlideBar');
+      const ellLeft = document.getElementById('ellLeftGroup');
+      const ellRight = document.getElementById('ellRightGroup');
+      if (!boxes.length) return;
+
+      const EMPHASIS = [
+        { leftOp: 1, rightOp: 1 },
+        { leftOp: 0.48, rightOp: 1 },
+        { leftOp: 1, rightOp: 0.48 },
+        { leftOp: 1, rightOp: 1 }
+      ];
+      let activeIdx = 0;
+      function selectStage(idx) {
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        boxes.forEach((b, i) => b.classList.toggle('is-active', i === idx));
+        panels.forEach((p, i) => p.classList.toggle('is-active', i === idx));
+        if (glideBar) glideBar.style.transform = `translateX(${idx * 100}%)`;
+        if (ellLeft) ellLeft.style.opacity = EMPHASIS[idx].leftOp;
+        if (ellRight) ellRight.style.opacity = EMPHASIS[idx].rightOp;
+      }
+      boxes.forEach((box, idx) => {
+        box.addEventListener('mouseenter', () => selectStage(idx));
+        box.addEventListener('click', () => selectStage(idx));
+      });
+    })();
+
+    const CONTACT_EMAIL = 'ericqiuyang99@gmail.com';
+    function copyEmail() {
+      navigator.clipboard?.writeText(CONTACT_EMAIL);
+      const toast = document.getElementById('toast');
+      toast.textContent = `Copied ${CONTACT_EMAIL} to clipboard`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>
