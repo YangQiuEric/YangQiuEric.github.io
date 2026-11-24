@@ -570,11 +570,11 @@
       color: var(--ink-subtle);
     }
 
-    /* ---------- DEEP ESPRESSO IMPACT BAND ---------- */
+    /* ---------- DEEP ESPRESSO IMPACT BAND (COMPACT 4-PILLAR RIBBON) ---------- */
     .impact-band {
       background: var(--espresso);
       color: var(--ink-on-dark);
-      padding: 64px 0 72px;
+      padding: 36px 0 40px;
       position: relative;
       overflow: hidden;
     }
@@ -585,7 +585,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      opacity: 0.52;
+      opacity: 0.48;
     }
 
     .impact-band .container {
@@ -602,46 +602,23 @@
       animation: archFlow 2.2s linear infinite;
     }
 
-    .impact-top {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 32px;
-      padding-bottom: 32px;
-      border-bottom: var(--rule-dark);
-    }
-
-    .impact-heading {
-      font-family: var(--serif);
-      font-size: 44px;
-      font-weight: 400;
-      line-height: 1.08;
-      letter-spacing: -0.015em;
-    }
-
-    .impact-heading em {
-      font-style: italic;
-      color: var(--peach-soft);
-    }
-
-    .impact-sub {
-      font-size: 14.5px;
-      color: var(--ink-on-dark-muted);
-      max-width: 420px;
-      line-height: 1.62;
-    }
-
     .impact-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
     }
 
     .impact-cell {
-      padding: 36px 26px 8px;
+      padding: 6px 26px 6px;
       border-right: var(--rule-dark);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+
+    .impact-cell:hover {
+      transform: translateY(-2px);
     }
 
     .impact-cell:first-child { padding-left: 0; }
@@ -649,21 +626,22 @@
 
     .impact-tag {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.06em;
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--lilac-soft);
-      margin-bottom: 16px;
+      margin-bottom: 10px;
+      opacity: 0.88;
     }
 
     .impact-num {
       font-family: var(--serif);
-      font-size: 68px;
+      font-size: 52px;
       font-weight: 400;
-      line-height: 0.96;
+      line-height: 1.02;
       letter-spacing: -0.02em;
       color: var(--peach-soft);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .impact-cell:nth-child(2) .impact-num { color: var(--lilac-soft); }
@@ -671,15 +649,15 @@
     .impact-cell:nth-child(4) .impact-num { color: var(--paper); }
 
     .impact-title {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 600;
       color: var(--paper);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .impact-detail {
-      font-size: 13.5px;
-      line-height: 1.58;
+      font-size: 12.5px;
+      line-height: 1.5;
       color: var(--ink-on-dark-muted);
     }
 
@@ -1399,9 +1377,11 @@
       .social-row { margin-left: 0; }
       .hero-art { min-height: 360px; border-right: none; border-bottom: var(--rule-light); }
       .hero-copy { padding: 40px 4px 48px; }
-      .impact-top { flex-direction: column; align-items: flex-start; }
       .impact-grid { grid-template-columns: repeat(2, 1fr); }
-      .impact-cell { border-bottom: var(--rule-dark); padding: 28px 16px; }
+      .impact-cell { border-bottom: var(--rule-dark); padding: 20px 16px; }
+      .impact-cell:first-child { padding-left: 16px; }
+      .impact-cell:nth-child(2n) { border-right: none; }
+      .impact-cell:nth-last-child(-n+2) { border-bottom: none; }
       .arch-detail-bar { height: auto; min-height: 150px; }
       .arch-panel { flex-direction: column; align-items: flex-start; justify-content: center; padding: 18px; }
       .cred-col, .cred-col:not(:first-child) {
@@ -1523,55 +1503,38 @@
     </div>
   </div>
 
-  <!-- 03. MONUMENTAL IMPACT BAND (SINGLE AUTHORITATIVE METRICS SUMMARY) -->
+  <!-- 03. COMPACT 4-PILLAR IMPACT RIBBON (TIKTOK · TENCENT · RESEARCH · KAGGLE) -->
   <section class="impact-band">
     <canvas class="impact-bg-canvas" id="impactSilkCanvas" aria-hidden="true"></canvas>
     <div class="container">
-      <div class="impact-top">
-        <h2 class="impact-heading">
-          Measured impact across <em>production &amp; research</em>
-        </h2>
-        <p class="impact-sub">
-          Online A/B gains from TikTok’s U.S. recommendation stack alongside peer-reviewed machine learning benchmarks and Kaggle honors.
-        </p>
-      </div>
-
       <div class="impact-grid">
-        <div class="impact-cell reveal">
-          <div class="impact-tag">01 · Post-Search</div>
+        <a class="impact-cell reveal" href="#experience">
+          <div class="impact-tag">TikTok · RecSys</div>
           <div class="impact-num" data-count-prefix="+" data-count-target="35" data-count-suffix="%" data-count-dec="0">+35%</div>
-          <div class="impact-title">Query Coverage (10 Views)</div>
-          <p class="impact-detail">
-            Two-channel recall + client real-time passthrough cutting i2i latency from 40+ min to seconds; +14.5% comment/play.
-          </p>
-        </div>
+          <div class="impact-title">Post-Search Query Coverage</div>
+          <p class="impact-detail">~3× cold-start · +1.43% publishes</p>
+        </a>
 
-        <div class="impact-cell reveal" style="transition-delay: 0.08s;">
-          <div class="impact-tag">02 · Cold-Start</div>
-          <div class="impact-num" data-count-prefix="~" data-count-target="3" data-count-suffix="×" data-count-dec="0">~3×</div>
-          <div class="impact-title">Posts Reaching 1K / 1h</div>
-          <p class="impact-detail">
-            Co-designed per-business HNSW over shared two-tower retrieval; +2.7% publish days/active creator and ~19% more publishing per unit of traffic than generic cold start.
-          </p>
-        </div>
+        <a class="impact-cell reveal" href="#experience" style="transition-delay: 0.08s;">
+          <div class="impact-tag">Tencent · Safety</div>
+          <div class="impact-num" data-count-prefix="+" data-count-target="9" data-count-suffix="%" data-count-dec="0">+9%</div>
+          <div class="impact-title">Harmful-Content Detection</div>
+          <p class="impact-detail">Millions msgs/day · −9.83% review</p>
+        </a>
 
-        <div class="impact-cell reveal" style="transition-delay: 0.16s;">
-          <div class="impact-tag">03 · Attribution</div>
-          <div class="impact-num" data-count-prefix="+" data-count-target="1.43" data-count-suffix="%" data-count-dec="2">+1.43%</div>
-          <div class="impact-title">Proactive Publishes / User</div>
-          <p class="impact-detail">
-            User-conditioned attention over 1K-length watch sequences (+0.9% AUC) with marginal uplift objective P(pub|h+g) − P(pub|h).
-          </p>
-        </div>
-
-        <div class="impact-cell reveal" style="transition-delay: 0.24s;">
-          <div class="impact-tag">04 · Scholarship</div>
-          <div class="impact-num" data-count-prefix="0" data-count-target="4" data-count-suffix="" data-count-dec="0">04</div>
+        <a class="impact-cell reveal" href="#research" style="transition-delay: 0.16s;">
+          <div class="impact-tag">UCSD &amp; UW · Research</div>
+          <div class="impact-num" data-count-prefix="" data-count-target="4" data-count-suffix="" data-count-dec="0">4</div>
           <div class="impact-title">Published Papers</div>
-          <p class="impact-detail">
-            Published in Cities (JCR Q1), IEEE EMBS, ICMIP ’23, and AAPM ’23 across urban computing, medical imaging, and health systems.
-          </p>
-        </div>
+          <p class="impact-detail">Cities Q1 · IEEE EMBS · ICMIP · AAPM</p>
+        </a>
+
+        <a class="impact-cell reveal" href="#education" style="transition-delay: 0.24s;">
+          <div class="impact-tag">Kaggle · Honors</div>
+          <div class="impact-num" data-count-prefix="Top " data-count-target="6" data-count-suffix="%" data-count-dec="0">Top 6%</div>
+          <div class="impact-title">Silver &amp; Bronze Medals</div>
+          <p class="impact-detail">30/573 GNSS · 135/1548 GI Tract</p>
+        </a>
       </div>
     </div>
   </section>
