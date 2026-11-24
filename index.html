@@ -575,6 +575,31 @@
       background: var(--espresso);
       color: var(--ink-on-dark);
       padding: 64px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .impact-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.52;
+    }
+
+    .impact-band .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes archFlow {
+      from { stroke-dashoffset: 0; }
+      to   { stroke-dashoffset: -22; }
+    }
+
+    .arch-flow-line {
+      animation: archFlow 2.2s linear infinite;
     }
 
     .impact-top {
@@ -1021,10 +1046,68 @@
       background: var(--paper-bright);
       border: var(--rule-light);
       border-radius: 12px;
-      padding: 26px;
+      padding: 0;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .lab-visual {
+      height: 132px;
+      width: 100%;
+      background: var(--linen);
+      border-bottom: var(--rule-light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lab-visual canvas,
+    .lab-visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .lab-content {
+      padding: 24px 26px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Living MRI <-> CT smooth optical scan animation */
+    @keyframes scanWipe {
+      0%, 100% { transform: translateX(0px); }
+      50% { transform: translateX(92px); }
+    }
+
+    .scan-line-move {
+      animation: scanWipe 5.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    }
+
+    /* Footer living ambient topographic canvas */
+    footer {
+      background: var(--espresso);
+      color: var(--ink-on-dark);
+      padding: 68px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.62;
+    }
+
+    footer .container {
+      position: relative;
+      z-index: 2;
     }
 
     .lab-tag {
@@ -1210,12 +1293,6 @@
     }
 
     /* ---------- FOOTER / CONTACT (NO PRIVATE H-1B DISCLOSURE) ---------- */
-    footer {
-      background: var(--espresso);
-      color: var(--ink-on-dark);
-      padding: 64px 0;
-    }
-
     .footer-inner {
       display: flex;
       align-items: flex-end;
@@ -1448,6 +1525,7 @@
 
   <!-- 03. MONUMENTAL IMPACT BAND (SINGLE AUTHORITATIVE METRICS SUMMARY) -->
   <section class="impact-band">
+    <canvas class="impact-bg-canvas" id="impactSilkCanvas" aria-hidden="true"></canvas>
     <div class="container">
       <div class="impact-top">
         <h2 class="impact-heading">
@@ -1559,15 +1637,15 @@
               </li>
             </ul>
 
-            <!-- Smooth Animated Collapsible Interactive System Architecture Diagram -->
-            <div class="arch-details" id="archAccordion">
-              <button type="button" class="arch-summary" id="archToggleBtn" aria-expanded="false" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit;">
+            <!-- Open-by-default Interactive System Architecture Diagram (Smoothly Collapsible) -->
+            <div class="arch-details is-open" id="archAccordion">
+              <button type="button" class="arch-summary" id="archToggleBtn" aria-expanded="true" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit;">
                 <span style="display: inline-flex; align-items: center;">
                   <span class="arch-pulse-dot" aria-hidden="true"></span>
                   <span>Interactive System Architecture — TikTok U.S. Recommendation Stack</span>
                 </span>
                 <span class="arch-summary-hint">
-                  <span id="archToggleLabel">Inspect 4 modules</span>
+                  <span id="archToggleLabel">Hide diagram</span>
                   <span class="arch-chevron">▾</span>
                 </span>
               </button>
@@ -1658,7 +1736,7 @@
                     </linearGradient>
                     <clipPath id="clipLeftEllipse"><ellipse cx="265" cy="116" rx="235" ry="72" /></clipPath>
                   </defs>
-                  <line x1="430" y1="0" x2="430" y2="62" stroke="#241e1b" stroke-opacity="0.32" stroke-width="1" stroke-dasharray="2.5 3" />
+                  <line class="arch-flow-line" x1="430" y1="0" x2="430" y2="62" stroke="#241e1b" stroke-opacity="0.38" stroke-width="1.05" stroke-dasharray="2.5 3" />
                   <circle cx="430" cy="3" r="2.3" fill="#241e1b" fill-opacity="0.55" />
                   <circle cx="430" cy="62" r="2.3" fill="#241e1b" fill-opacity="0.7" />
                   <g id="ellLeftGroup" class="ellipse-left">
@@ -1726,45 +1804,63 @@
       </div>
 
       <div class="labs-grid">
+        <!-- Lab 1: Clinical LLM with Living Structured Extraction Visual -->
         <div class="lab-card sheen-card reveal">
-          <div>
-            <div class="lab-tag">UC San Diego · AI Data Analytics Lab</div>
-            <h3 class="lab-title">Clinical LLM Evaluation Benchmark</h3>
-            <p class="lab-desc">
-              Proposed an evaluation framework overcoming BLEU/ROUGE limits in medical NLP; collected <strong>3,500 pathology reports</strong> from UCSD Medical Center with radiologist ground truth across 6 disease entities and built structured extraction LLM pipelines.
-            </p>
+          <div class="lab-visual" aria-hidden="true">
+            <canvas id="labCanvas1"></canvas>
           </div>
-          <div class="lab-foot">
-            <span>3,500 reports · 6 entities</span>
-            <span>2023 – 2024</span>
+          <div class="lab-content">
+            <div>
+              <div class="lab-tag">UC San Diego · AI Data Analytics Lab</div>
+              <h3 class="lab-title">Clinical LLM Evaluation Benchmark</h3>
+              <p class="lab-desc">
+                Proposed an evaluation framework overcoming BLEU/ROUGE limits in medical NLP; collected <strong>3,500 pathology reports</strong> from UCSD Medical Center with radiologist ground truth across 6 disease entities and built structured extraction LLM pipelines.
+              </p>
+            </div>
+            <div class="lab-foot">
+              <span>3,500 reports · 6 entities</span>
+              <span>2023 – 2024</span>
+            </div>
           </div>
         </div>
 
+        <!-- Lab 2: Urban Vision with Living Pastel Spatial Wealth Mosaic -->
         <div class="lab-card sheen-card reveal" style="transition-delay: 0.08s;">
-          <div>
-            <div class="lab-tag">UW–Madison · Spatial Mining Lab</div>
-            <h3 class="lab-title">Urban Vision &amp; Multi-Gate MoE</h3>
-            <p class="lab-desc">
-              Built a point-scale urban wealth prediction system running Swin Transformer over <strong>110,000+ street-view images</strong> with spatial-temporal TrueSkill (<strong>+15% accuracy</strong>), plus a 5-expert MMoE generalizing across NYC, Boston &amp; LA.
-            </p>
+          <div class="lab-visual" aria-hidden="true">
+            <canvas id="labCanvas2"></canvas>
           </div>
-          <div class="lab-foot">
-            <span>Middle-class F1 0.73 → 0.88</span>
-            <span>2022 – 2023</span>
+          <div class="lab-content">
+            <div>
+              <div class="lab-tag">UW–Madison · Spatial Mining Lab</div>
+              <h3 class="lab-title">Urban Vision &amp; Multi-Gate MoE</h3>
+              <p class="lab-desc">
+                Built a point-scale urban wealth prediction system running Swin Transformer over <strong>110,000+ street-view images</strong> with spatial-temporal TrueSkill (<strong>+15% accuracy</strong>), plus a 5-expert MMoE generalizing across NYC, Boston &amp; LA.
+              </p>
+            </div>
+            <div class="lab-foot">
+              <span>Middle-class F1 0.73 → 0.88</span>
+              <span>2022 – 2023</span>
+            </div>
           </div>
         </div>
 
+        <!-- Lab 3: 3D Diffusion with Live Sweeping MRI <-> Synthetic CT Scanner -->
         <div class="lab-card sheen-card reveal" style="transition-delay: 0.16s;">
-          <div>
-            <div class="lab-tag">UW–Madison · Human Oncology</div>
-            <h3 class="lab-title">3D Conditional Diffusion MRI→CT</h3>
-            <p class="lab-desc">
-              Applied 3D DDIM and Pix2Pix to MRI→CT translation; cut GPU memory via additive skip connections and full-dimensional ramp positional embeddings trained on 128×128×32 patches for arbitrary-size volumes.
-            </p>
+          <div class="lab-visual" aria-hidden="true">
+            <canvas id="labCanvas3"></canvas>
           </div>
-          <div class="lab-foot">
-            <span>Spine DICE 0.80</span>
-            <span>2022 – 2023</span>
+          <div class="lab-content">
+            <div>
+              <div class="lab-tag">UW–Madison · Human Oncology</div>
+              <h3 class="lab-title">3D Conditional Diffusion MRI→CT</h3>
+              <p class="lab-desc">
+                Applied 3D DDIM and Pix2Pix to MRI→CT translation; cut GPU memory via additive skip connections and full-dimensional ramp positional embeddings trained on 128×128×32 patches for arbitrary-size volumes.
+              </p>
+            </div>
+            <div class="lab-foot">
+              <span>Spine DICE 0.80</span>
+              <span>2022 – 2023</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1894,8 +1990,9 @@
     </div>
   </section>
 
-  <!-- 07. CONTACT FOOTER (CLEAN, PUBLIC-SAFE, NO WORK-AUTH DISCLOSURE) -->
+  <!-- 07. CONTACT FOOTER WITH LIVING AMBIENT SILK TOPOGRAPHY BOOKEND -->
   <footer id="contact">
+    <canvas class="footer-bg-canvas" id="footerSilkCanvas" aria-hidden="true"></canvas>
     <div class="container footer-inner">
       <div>
         <div class="footer-title">Get in <em>touch.</em></div>
@@ -2190,6 +2287,238 @@
         }, { threshold: 0.35 });
         countEls.forEach(el => countObs.observe(el));
       }
+    })();
+
+    // 6. Cohesive Living Pastel Art Canvases (Impact Band + 3 Research Labs + Footer Bookend Wave)
+    (function initSectionArtworks() {
+      const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function prep(canvas, forceDraw) {
+        if (!canvas) return null;
+        const r = canvas.getBoundingClientRect();
+        if (!forceDraw && (r.bottom < -160 || r.top > window.innerHeight + 160)) return null;
+        const w = Math.max(1, r.width), h = Math.max(1, r.height);
+        if (canvas.width !== Math.round(w * DPR) || canvas.height !== Math.round(h * DPR)) {
+          canvas.width = Math.round(w * DPR);
+          canvas.height = Math.round(h * DPR);
+        }
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        return { ctx, w, h };
+      }
+
+      function drawSilkRibbons(ctx, w, h, t, curves, phaseOffset, bloomX, bloomY) {
+        ctx.clearRect(0, 0, w, h);
+        // Subtle ambient pastel bloom echoing the Hero sculpture
+        const bloom = ctx.createRadialGradient(
+          w * bloomX, h * bloomY, 12,
+          w * bloomX, h * bloomY, Math.max(w, h) * 0.42
+        );
+        bloom.addColorStop(0, 'rgba(244, 191, 162, 0.14)');
+        bloom.addColorStop(0.5, 'rgba(203, 191, 240, 0.08)');
+        bloom.addColorStop(1, 'rgba(184, 213, 242, 0)');
+        ctx.fillStyle = bloom;
+        ctx.fillRect(0, 0, w, h);
+
+        for (let i = 0; i < curves; i++) {
+          const frac = i / Math.max(1, curves - 1);
+          ctx.beginPath();
+          for (let x = 0; x <= w; x += 22) {
+            const nx = x / w;
+            const y = h * (0.20 + frac * 0.64) +
+              Math.sin(nx * 4.0 + t * 0.44 + i * 0.65 + phaseOffset) * 20 +
+              Math.cos(nx * 2.4 - t * 0.34 + i * 0.42) * 13;
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          const g = ctx.createLinearGradient(0, 0, w, 0);
+          g.addColorStop(0, 'rgba(244, 191, 162, 0.50)');
+          g.addColorStop(0.5, 'rgba(203, 191, 240, 0.44)');
+          g.addColorStop(1, 'rgba(184, 213, 242, 0.50)');
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1.0;
+          ctx.stroke();
+        }
+      }
+
+      const ci = document.getElementById('impactSilkCanvas');
+      const c1 = document.getElementById('labCanvas1');
+      const c2 = document.getElementById('labCanvas2');
+      const c3 = document.getElementById('labCanvas3');
+      const cf = document.getElementById('footerSilkCanvas');
+      const COLORS = ['#f4bfa2', '#f5d8c8', '#cbbff0', '#dfd8f3', '#b8d5f2', '#e9c8ba'];
+
+      let t = 0;
+      let firstRun = true;
+      function loop() {
+        t += 0.015;
+        const force = firstRun;
+        firstRun = false;
+
+        // --- Impact Band Ambient Silk Contour Backdrop ---
+        const gi = prep(ci, force);
+        if (gi) {
+          drawSilkRibbons(gi.ctx, gi.w, gi.h, t, 5, 0.8, 0.86, 0.25);
+        }
+
+        // --- Lab 1: Clinical LLM — Living Unstructured Text -> 6 Pastel Structured Entity Bars ---
+        const g1 = prep(c1, force);
+        if (g1) {
+          const { ctx, w, h } = g1;
+          ctx.fillStyle = '#eae1d3';
+          ctx.fillRect(0, 0, w, h);
+
+          // Soft ambient wash matching Hero palette
+          const bg = ctx.createRadialGradient(w * 0.72, h * 0.5, 8, w * 0.65, h * 0.5, w * 0.55);
+          bg.addColorStop(0, 'rgba(244, 191, 162, 0.42)');
+          bg.addColorStop(0.55, 'rgba(203, 191, 240, 0.22)');
+          bg.addColorStop(1, 'rgba(203, 191, 240, 0)');
+          ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
+
+          // Left document card (unstructured prose) with gentle reading scan highlight
+          const docX = w * 0.10, docY = 20, docW = w * 0.30, docH = h - 40;
+          ctx.fillStyle = '#f8f4ec';
+          ctx.strokeStyle = 'rgba(36, 30, 27, 0.32)';
+          ctx.lineWidth = 0.9;
+          ctx.beginPath(); ctx.roundRect(docX, docY, docW, docH, 6); ctx.fill(); ctx.stroke();
+
+          const activeLine = Math.floor((t * 1.1) % 6);
+          for (let i = 0; i < 6; i++) {
+            const ly = docY + 15 + i * ((docH - 28) / 5);
+            const lw = docW * (0.58 + ((i * 19) % 25) / 100);
+            ctx.strokeStyle = i === activeLine ? '#6a4d76' : 'rgba(36, 30, 27, 0.24)';
+            ctx.lineWidth = i === activeLine ? 2.2 : 1.3;
+            ctx.beginPath(); ctx.moveTo(docX + 12, ly); ctx.lineTo(docX + 12 + lw, ly); ctx.stroke();
+          }
+
+          // Center clean bridge arrow
+          const midX = w * 0.48;
+          ctx.strokeStyle = 'rgba(36, 30, 27, 0.42)';
+          ctx.lineWidth = 1.1;
+          ctx.beginPath();
+          ctx.moveTo(midX - 10, h * 0.5); ctx.lineTo(midX + 12, h * 0.5);
+          ctx.moveTo(midX + 7, h * 0.5 - 4); ctx.lineTo(midX + 12, h * 0.5); ctx.lineTo(midX + 7, h * 0.5 + 4);
+          ctx.stroke();
+
+          // Right: 6 structured pastel entity schema pills gently illuminating in sequence
+          const barX = w * 0.56, barW = w * 0.34;
+          for (let i = 0; i < 6; i++) {
+            const by = 18 + i * ((h - 36) / 6);
+            const bh = 11.5;
+            const pulse = 0.5 + 0.5 * Math.sin(t * 2.2 - i * 0.75);
+            const isAct = i === activeLine;
+            ctx.fillStyle = COLORS[i];
+            ctx.globalAlpha = isAct ? 0.95 : (0.48 + pulse * 0.22);
+            ctx.beginPath(); ctx.roundRect(barX, by, barW * (0.76 + 0.24 * (isAct ? 1 : pulse)), bh, 3); ctx.fill();
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = isAct ? 'rgba(36, 30, 27, 0.65)' : 'rgba(36, 30, 27, 0.20)';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        // --- Lab 2: Urban Vision — Breathing Pastel Spatial Neighborhood Wealth Mosaic ---
+        const g2 = prep(c2, force);
+        if (g2) {
+          const { ctx, w, h } = g2;
+          ctx.fillStyle = '#eae1d3';
+          ctx.fillRect(0, 0, w, h);
+
+          const cols = 7, rows = 4, gap = 6;
+          const padX = 24, padY = 18;
+          const tw = (w - padX * 2 - gap * (cols - 1)) / cols;
+          const th = (h - padY * 2 - gap * (rows - 1)) / rows;
+
+          for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+              const x = padX + c * (tw + gap);
+              const y = padY + r * (th + gap);
+              // Smooth spatial field wave moving across urban blocks
+              const v = 0.5 + 0.5 * Math.sin(c * 0.65 + t * 0.85) * Math.cos(r * 0.75 - t * 0.62);
+              let fill = '#d4e4f4'; // low-tier cool mist
+              if (v > 0.66) fill = '#f4bfa2'; // high-tier warm peach
+              else if (v > 0.36) fill = '#dfd8f3'; // middle-class lilac
+
+              ctx.fillStyle = fill;
+              ctx.globalAlpha = 0.55 + v * 0.42;
+              ctx.beginPath(); ctx.roundRect(x, y, tw, th, 4); ctx.fill();
+              ctx.globalAlpha = 1;
+              ctx.strokeStyle = `rgba(36, 30, 27, ${0.14 + v * 0.24})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+
+        // --- Lab 3: 3D Diffusion MRI -> Synthetic CT — Living Sweeping Optical Scan Cross-Section ---
+        const g3 = prep(c3, force);
+        if (g3) {
+          const { ctx, w, h } = g3;
+          ctx.fillStyle = '#eae1d3';
+          ctx.fillRect(0, 0, w, h);
+
+          const boxW = Math.min(210, w * 0.66), boxH = h - 34;
+          const bx = (w - boxW) * 0.5, by = 17;
+          const cx = bx + boxW * 0.5, cy = by + boxH * 0.5;
+          const scanFrac = 0.5 + 0.34 * Math.sin(t * 0.95);
+          const scanX = bx + boxW * scanFrac;
+
+          // Base Right Side: Warm Synthetic CT (pastel bone/tissue contrast)
+          ctx.save();
+          ctx.beginPath(); ctx.roundRect(bx, by, boxW, boxH, 8); ctx.clip();
+          ctx.fillStyle = '#f8f4ec';
+          ctx.fillRect(bx, by, boxW, boxH);
+          ctx.fillStyle = '#f5d8c8';
+          ctx.beginPath(); ctx.ellipse(cx, cy, boxW * 0.38, boxH * 0.38, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = 'rgba(36,30,27,0.45)'; ctx.lineWidth = 0.9; ctx.stroke();
+          ctx.fillStyle = '#f8f4ec';
+          ctx.beginPath(); ctx.ellipse(cx - boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx + boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#241e1b';
+          ctx.beginPath(); ctx.arc(cx, cy + boxH * 0.15, 6.5, 0, Math.PI * 2); ctx.fill();
+
+          // Left Clipped Side: Deep Espresso MRI Soft-Tissue Contrast
+          ctx.save();
+          ctx.beginPath(); ctx.rect(bx, by, scanX - bx, boxH); ctx.clip();
+          ctx.fillStyle = '#28221e';
+          ctx.fillRect(bx, by, boxW, boxH);
+          ctx.fillStyle = '#3f3631';
+          ctx.beginPath(); ctx.ellipse(cx, cy, boxW * 0.38, boxH * 0.38, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = '#dfd8f3'; ctx.lineWidth = 0.9; ctx.stroke();
+          ctx.fillStyle = '#241e1b';
+          ctx.beginPath(); ctx.ellipse(cx - boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx + boxW * 0.16, cy, boxW * 0.12, boxH * 0.22, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#f4bfa2';
+          ctx.beginPath(); ctx.arc(cx, cy + boxH * 0.15, 6.5, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+
+          // Luminous sweeping scan line
+          const sg = ctx.createLinearGradient(scanX - 18, 0, scanX + 18, 0);
+          sg.addColorStop(0, 'rgba(203,191,240,0)');
+          sg.addColorStop(0.5, 'rgba(244,191,162,0.55)');
+          sg.addColorStop(1, 'rgba(184,213,242,0)');
+          ctx.fillStyle = sg; ctx.fillRect(scanX - 18, by, 36, boxH);
+          ctx.strokeStyle = '#f5d8c8'; ctx.lineWidth = 1.4;
+          ctx.beginPath(); ctx.moveTo(scanX, by); ctx.lineTo(scanX, by + boxH); ctx.stroke();
+
+          // Crisp corner labels
+          ctx.font = '500 9.5px "IBM Plex Mono", monospace';
+          ctx.fillStyle = '#f3ede2'; ctx.textAlign = 'left'; ctx.fillText('MRI', bx + 10, by + 16);
+          ctx.fillStyle = '#241e1b'; ctx.textAlign = 'right'; ctx.fillText('CT', bx + boxW - 10, by + 16);
+          ctx.restore();
+
+          // Frame border
+          ctx.strokeStyle = 'rgba(36, 30, 27, 0.34)'; ctx.lineWidth = 0.9;
+          ctx.beginPath(); ctx.roundRect(bx, by, boxW, boxH, 8); ctx.stroke();
+        }
+
+        // --- Footer Bookend: Subtle Flowing Pastel Contour Ribbons on Dark Espresso ---
+        const gf = prep(cf, force);
+        if (gf) {
+          drawSilkRibbons(gf.ctx, gf.w, gf.h, t, 6, 0.0, 0.78, 0.52);
+        }
+
+        if (!reduced) requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
     })();
   </script>
 </body>
