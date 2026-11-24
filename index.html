@@ -70,7 +70,7 @@
       --serif: "Newsreader", Georgia, serif;
       --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
-      --max-w: 1220px;
+      --max-w: 1380px;
     }
 
     * {
@@ -300,7 +300,7 @@
       border-top: var(--rule-light);
     }
 
-    /* ---------- HERO (MOLOCO-STYLE 50/50 FULL-HEIGHT ARCHITECTURAL SPLIT) ---------- */
+    /* ---------- HERO (FULL-BLEED EDGE-TO-EDGE 50/50 IMMERSIVE SPLIT) ---------- */
     .hero {
       padding: 0;
       border-bottom: var(--rule-light);
@@ -309,9 +309,8 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      width: 100%;
       min-height: max(580px, calc(100vh - 160px));
-      border-left: var(--rule-light);
-      border-right: var(--rule-light);
     }
 
     .hero-art {
@@ -323,11 +322,15 @@
     }
 
     .hero-copy {
-      padding: 64px 56px 64px 64px;
+      padding: 64px clamp(44px, 6vw, 96px);
       display: flex;
       flex-direction: column;
       justify-content: center;
       background: var(--paper);
+    }
+
+    .hero-copy > * {
+      max-width: 560px;
     }
 
     .eyebrow {
@@ -1408,7 +1411,7 @@
       .eyebrow { flex-wrap: wrap; line-height: 1.5; }
       .social-row { margin-left: 0; }
       .hero-art { min-height: 360px; border-right: none; border-bottom: var(--rule-light); }
-      .hero-copy { padding: 40px 4px 48px; }
+      .hero-copy { padding: 40px 24px 48px; }
       .impact-grid { grid-template-columns: repeat(2, 1fr); }
       .impact-cell { border-bottom: var(--rule-dark); padding: 20px 16px; }
       .impact-cell:first-child { padding-left: 16px; }
@@ -1475,32 +1478,30 @@
     <div class="scroll-progress" id="scrollProgress"></div>
   </header>
 
-  <!-- 01. HERO (MOLOCO-ALIGNED 50/50 FULL-HEIGHT SPLIT: GRAND ART LEFT, EDITORIAL COPY RIGHT) -->
+  <!-- 01. HERO (FULL-BLEED EDGE-TO-EDGE 50/50 IMMERSIVE SPLIT) -->
   <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <!-- Left 50%: Grand Full-Height Living 9-Layer Luminous Pastel Sculpture -->
-        <div class="hero-art" id="heroArt" aria-hidden="true">
-          <canvas class="art-canvas" id="manifoldCanvas"></canvas>
-        </div>
+    <div class="hero-grid">
+      <!-- Left 50%: Grand Full-Bleed Living 9-Layer Luminous Pastel Sculpture -->
+      <div class="hero-art" id="heroArt" aria-hidden="true">
+        <canvas class="art-canvas" id="manifoldCanvas"></canvas>
+      </div>
 
-        <!-- Right 50%: Clean Editorial Introduction -->
-        <div class="hero-copy">
-          <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            <span>Recommendation Algorithm Engineer · Bay Area</span>
-          </div>
-          <h1 class="hero-name">Eric Qiu</h1>
-          <p class="hero-tagline">
-            End-to-end <em>retrieval, ranking</em> &amp; value modeling.
-          </p>
-          <p class="hero-bio">
-            Recommendation Algorithm Engineer at <strong>TikTok</strong> building retrieval, ranking, and cold-start systems for U.S. informational content — joining <strong>Moloco</strong> in January 2027. Author of 4 published papers across applied ML, vision, and medical imaging.
-          </p>
-          <div class="hero-actions">
-            <a href="#experience" class="btn btn-dark">Explore Experience</a>
-            <button class="btn btn-outline" onclick="copyEmail()">Copy Email</button>
-          </div>
+      <!-- Right 50%: Clean Editorial Introduction -->
+      <div class="hero-copy">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>Recommendation Algorithm Engineer · Bay Area</span>
+        </div>
+        <h1 class="hero-name">Eric Qiu</h1>
+        <p class="hero-tagline">
+          End-to-end <em>retrieval, ranking</em> &amp; value modeling.
+        </p>
+        <p class="hero-bio">
+          Recommendation Algorithm Engineer at <strong>TikTok</strong> building retrieval, ranking, and cold-start systems for U.S. informational content — joining <strong>Moloco</strong> in January 2027. Author of 4 published papers across applied ML, vision, and medical imaging.
+        </p>
+        <div class="hero-actions">
+          <a href="#experience" class="btn btn-dark">Explore Experience</a>
+          <button class="btn btn-outline" onclick="copyEmail()">Copy Email</button>
         </div>
       </div>
     </div>
