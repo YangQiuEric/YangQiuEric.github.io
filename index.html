@@ -84,6 +84,49 @@
       border-bottom: var(--rule-light);
     }
 
+    /* Ultra-thin Pentagram reading progress hairline */
+    .scroll-progress {
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      height: 2px;
+      width: 100%;
+      transform-origin: left center;
+      transform: scaleX(0);
+      background: linear-gradient(90deg, var(--peach), var(--plum-text), var(--periwinkle));
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .nav-links a {
+      padding: 4px 0;
+      position: relative;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1.5px;
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-current {
+      color: var(--ink);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.is-current::after {
+      transform: scaleX(1);
+    }
+
     .nav-inner {
       height: 74px;
       display: flex;
@@ -119,17 +162,6 @@
       font-size: 14px;
       font-weight: 500;
       color: var(--ink-muted);
-    }
-
-    .nav-links a {
-      padding: 4px 0;
-      border-bottom: 1.5px solid transparent;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--ink);
-      border-bottom-color: var(--ink);
     }
 
     .nav-right {
@@ -382,6 +414,148 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
+      cursor: pointer;
+      transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .affil-logos:hover .affil-item {
+      opacity: 0.42;
+    }
+
+    .affil-logos .affil-item:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    /* ---------- PENTAGRAM EDITORIAL REVEAL & TACTILE HOVER MOTION ---------- */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-copy > * {
+      animation: heroFadeUp 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .hero-copy > *:nth-child(1) { animation-delay: 0.04s; }
+    .hero-copy > *:nth-child(2) { animation-delay: 0.12s; }
+    .hero-copy > *:nth-child(3) { animation-delay: 0.20s; }
+    .hero-copy > *:nth-child(4) { animation-delay: 0.28s; }
+    .hero-copy > *:nth-child(5) { animation-delay: 0.36s; }
+
+    .reveal {
+      transition: opacity 0.68s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .js-reveal .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .js-reveal .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle cotton-paper light sheen on Lab & Publication cards */
+    .sheen-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheen-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        340px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(244, 191, 162, 0.16),
+        rgba(203, 191, 240, 0.08) 45%,
+        transparent 72%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .sheen-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Delicate left reading guide on Experience rows */
+    .exp-row {
+      position: relative;
+      transition: background 0.35s ease;
+    }
+
+    .exp-row::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 40px;
+      bottom: 40px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--peach), var(--plum-text));
+      transform: scaleY(0);
+      transform-origin: top center;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .exp-row:hover::before {
+      transform: scaleY(1);
+    }
+
+    .pub-link .arrow-ne {
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .pub-link:hover .arrow-ne {
+      transform: translate(2.5px, -2.5px);
+    }
+
+    .arch-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--plum-text);
+      display: inline-block;
+      margin-right: 10px;
+      box-shadow: 0 0 0 0 rgba(106, 77, 118, 0.45);
+      animation: softPulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+
+    @keyframes softPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(106, 77, 118, 0.42); }
+      70%  { box-shadow: 0 0 0 7px rgba(106, 77, 118, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(106, 77, 118, 0); }
+    }
+
+    .arch-expand {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.38s ease;
+      opacity: 0;
+    }
+
+    .arch-details.is-open .arch-expand {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .arch-expand-inner {
+      overflow: hidden;
+    }
+
+    .arch-details.is-open .arch-chevron {
+      transform: rotate(180deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-copy > *, .reveal, .arch-pulse-dot { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
     }
 
     .affil-name {
@@ -1209,6 +1383,7 @@
         <a class="btn btn-outline" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
     </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
   </header>
 
   <!-- 01. HERO (MOLOCO-ALIGNED 50/50 FULL-HEIGHT SPLIT: GRAND ART LEFT, EDITORIAL COPY RIGHT) -->
@@ -1247,26 +1422,26 @@
     <div class="container affil-inner">
       <div class="affil-label">Experience &amp; research across</div>
       <div class="affil-logos">
-        <div class="affil-item">
+        <a class="affil-item" href="#experience">
           <span class="affil-name">Moloco</span>
           <span class="affil-sub">Incoming ML Eng · 2027</span>
-        </div>
-        <div class="affil-item">
+        </a>
+        <a class="affil-item" href="#experience">
           <span class="affil-name">TikTok</span>
           <span class="affil-sub">RecSys Algorithm</span>
-        </div>
-        <div class="affil-item">
+        </a>
+        <a class="affil-item" href="#experience">
           <span class="affil-name">Tencent IEG</span>
           <span class="affil-sub">Data Science · PUBG</span>
-        </div>
-        <div class="affil-item">
+        </a>
+        <a class="affil-item" href="#research">
           <span class="affil-name">UC San Diego</span>
           <span class="affil-sub">M.S. CSE · AI Lab</span>
-        </div>
-        <div class="affil-item">
+        </a>
+        <a class="affil-item" href="#research">
           <span class="affil-name">UW–Madison</span>
           <span class="affil-sub">B.S. CS/DS · 2 Labs</span>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -1284,36 +1459,36 @@
       </div>
 
       <div class="impact-grid">
-        <div class="impact-cell">
+        <div class="impact-cell reveal">
           <div class="impact-tag">01 · Post-Search</div>
-          <div class="impact-num">+35%</div>
+          <div class="impact-num" data-count-prefix="+" data-count-target="35" data-count-suffix="%" data-count-dec="0">+35%</div>
           <div class="impact-title">Query Coverage (10 Views)</div>
           <p class="impact-detail">
             Two-channel recall + client real-time passthrough cutting i2i latency from 40+ min to seconds; +14.5% comment/play.
           </p>
         </div>
 
-        <div class="impact-cell">
+        <div class="impact-cell reveal" style="transition-delay: 0.08s;">
           <div class="impact-tag">02 · Cold-Start</div>
-          <div class="impact-num">~3×</div>
+          <div class="impact-num" data-count-prefix="~" data-count-target="3" data-count-suffix="×" data-count-dec="0">~3×</div>
           <div class="impact-title">Posts Reaching 1K / 1h</div>
           <p class="impact-detail">
             Co-designed per-business HNSW over shared two-tower retrieval; +2.7% publish days/active creator and ~19% more publishing per unit of traffic than generic cold start.
           </p>
         </div>
 
-        <div class="impact-cell">
+        <div class="impact-cell reveal" style="transition-delay: 0.16s;">
           <div class="impact-tag">03 · Attribution</div>
-          <div class="impact-num">+1.43%</div>
+          <div class="impact-num" data-count-prefix="+" data-count-target="1.43" data-count-suffix="%" data-count-dec="2">+1.43%</div>
           <div class="impact-title">Proactive Publishes / User</div>
           <p class="impact-detail">
             User-conditioned attention over 1K-length watch sequences (+0.9% AUC) with marginal uplift objective P(pub|h+g) − P(pub|h).
           </p>
         </div>
 
-        <div class="impact-cell">
+        <div class="impact-cell reveal" style="transition-delay: 0.24s;">
           <div class="impact-tag">04 · Scholarship</div>
-          <div class="impact-num">04</div>
+          <div class="impact-num" data-count-prefix="0" data-count-target="4" data-count-suffix="" data-count-dec="0">04</div>
           <div class="impact-title">Published Papers</div>
           <p class="impact-detail">
             Published in Cities (JCR Q1), IEEE EMBS, ICMIP ’23, and AAPM ’23 across urban computing, medical imaging, and health systems.
@@ -1384,16 +1559,21 @@
               </li>
             </ul>
 
-            <!-- Collapsible Interactive System Architecture Diagram (Nested cleanly under TikTok!) -->
-            <details class="arch-details">
-              <summary class="arch-summary">
-                <span>Interactive System Architecture — TikTok U.S. Recommendation Stack</span>
+            <!-- Smooth Animated Collapsible Interactive System Architecture Diagram -->
+            <div class="arch-details" id="archAccordion">
+              <button type="button" class="arch-summary" id="archToggleBtn" aria-expanded="false" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit;">
+                <span style="display: inline-flex; align-items: center;">
+                  <span class="arch-pulse-dot" aria-hidden="true"></span>
+                  <span>Interactive System Architecture — TikTok U.S. Recommendation Stack</span>
+                </span>
                 <span class="arch-summary-hint">
-                  <span>Inspect 4 modules</span>
+                  <span id="archToggleLabel">Inspect 4 modules</span>
                   <span class="arch-chevron">▾</span>
                 </span>
-              </summary>
-              <div class="arch-body">
+              </button>
+              <div class="arch-expand">
+                <div class="arch-expand-inner">
+                  <div class="arch-body">
                 <div class="domain-row" id="domainRow">
                   <div class="domain-box is-active" data-stage="0">
                     <div class="domain-title">Two-Channel Recall</div>
@@ -1497,8 +1677,10 @@
                   <text x="430" y="113" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="19" font-style="italic" fill="#241e1b">Core ML</text>
                   <text x="430" y="130" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#241e1b">END-TO-END</text>
                 </svg>
+                  </div>
+                </div>
               </div>
-            </details>
+            </div>
           </div>
         </article>
 
@@ -1544,7 +1726,7 @@
       </div>
 
       <div class="labs-grid">
-        <div class="lab-card">
+        <div class="lab-card sheen-card reveal">
           <div>
             <div class="lab-tag">UC San Diego · AI Data Analytics Lab</div>
             <h3 class="lab-title">Clinical LLM Evaluation Benchmark</h3>
@@ -1558,7 +1740,7 @@
           </div>
         </div>
 
-        <div class="lab-card">
+        <div class="lab-card sheen-card reveal" style="transition-delay: 0.08s;">
           <div>
             <div class="lab-tag">UW–Madison · Spatial Mining Lab</div>
             <h3 class="lab-title">Urban Vision &amp; Multi-Gate MoE</h3>
@@ -1572,7 +1754,7 @@
           </div>
         </div>
 
-        <div class="lab-card">
+        <div class="lab-card sheen-card reveal" style="transition-delay: 0.16s;">
           <div>
             <div class="lab-tag">UW–Madison · Human Oncology</div>
             <h3 class="lab-title">3D Conditional Diffusion MRI→CT</h3>
@@ -1589,9 +1771,9 @@
 
       <!-- Publications (Dropped "Selected", added clickable Scholar/DOI links) -->
       <div>
-        <h3 class="sec-title" style="font-size: 36px; margin-bottom: 26px;">Publications</h3>
+        <h3 class="sec-title reveal" style="font-size: 36px; margin-bottom: 26px;">Publications</h3>
         <div class="pubs-grid">
-          <article class="pub-card">
+          <article class="pub-card sheen-card reveal">
             <div>
               <div class="pub-card-top">
                 <span class="pub-num">01</span>
@@ -1601,11 +1783,11 @@
             </div>
             <div class="pub-foot">
               <span>Qiu Y., Wu M., Huang Q.</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=Do+You+Know+Your+Neighborhood+Integrating+Street+View+Images+and+Multi-task+Learning" target="_blank" rel="noopener">DOI / Paper ↗</a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Do+You+Know+Your+Neighborhood+Integrating+Street+View+Images+and+Multi-task+Learning" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
             </div>
           </article>
 
-          <article class="pub-card">
+          <article class="pub-card sheen-card reveal" style="transition-delay: 0.08s;">
             <div>
               <div class="pub-card-top">
                 <span class="pub-num">02</span>
@@ -1615,11 +1797,11 @@
             </div>
             <div class="pub-foot">
               <span>Qiu Y., et al.</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=Development+of+a+Voice-Enabled+Automated+Sleep+Survey+System+Qiu" target="_blank" rel="noopener">DOI / Paper ↗</a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Development+of+a+Voice-Enabled+Automated+Sleep+Survey+System+Qiu" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
             </div>
           </article>
 
-          <article class="pub-card">
+          <article class="pub-card sheen-card reveal" style="transition-delay: 0.12s;">
             <div>
               <div class="pub-card-top">
                 <span class="pub-num">03</span>
@@ -1629,11 +1811,11 @@
             </div>
             <div class="pub-foot">
               <span>Qiu Y. (Sole Author)</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=UPerNet-Based+Deep+Learning+Method+for+the+Segmentation+of+Gastrointestinal+Tract+Images" target="_blank" rel="noopener">DOI / Paper ↗</a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=UPerNet-Based+Deep+Learning+Method+for+the+Segmentation+of+Gastrointestinal+Tract+Images" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
             </div>
           </article>
 
-          <article class="pub-card">
+          <article class="pub-card sheen-card reveal" style="transition-delay: 0.20s;">
             <div>
               <div class="pub-card-top">
                 <span class="pub-num">04</span>
@@ -1643,7 +1825,7 @@
             </div>
             <div class="pub-foot">
               <span>Qiu Y., Yan Y., Glide-Hurst C.</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=Deep+Learning+Methodology+to+Generate+Synthetic+CT+for+MR-Guided+Radiation+Therapy+in+the+Thorax" target="_blank" rel="noopener">DOI / Paper ↗</a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Deep+Learning+Methodology+to+Generate+Synthetic+CT+for+MR-Guided+Radiation+Therapy+in+the+Thorax" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
             </div>
           </article>
         </div>
@@ -1909,6 +2091,106 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2200);
     }
+
+    // 4. Smooth Animated Architecture Accordion Toggle
+    (function initArchAccordion() {
+      const wrap = document.getElementById('archAccordion');
+      const btn = document.getElementById('archToggleBtn');
+      const lbl = document.getElementById('archToggleLabel');
+      if (!wrap || !btn) return;
+      btn.addEventListener('click', () => {
+        const isOpen = wrap.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+        if (lbl) lbl.textContent = isOpen ? 'Hide diagram' : 'Inspect 4 modules';
+      });
+    })();
+
+    // 5. Pentagram Editorial Motion: Scroll Progress, Nav Active Spy, Scroll Reveals & Metric Count-Up
+    (function initEditorialMotion() {
+      const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // A. Reading progress hairline + active section spy
+      const progressEl = document.getElementById('scrollProgress');
+      const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+      const sections = ['experience', 'research', 'education', 'contact']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+      function onScroll() {
+        if (progressEl) {
+          const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+          const ratio = Math.min(1, Math.max(0, window.scrollY / max));
+          progressEl.style.transform = `scaleX(${ratio})`;
+        }
+        let currentId = '';
+        const probe = window.scrollY + 160;
+        for (const sec of sections) {
+          if (sec.offsetTop <= probe) currentId = sec.id;
+        }
+        navLinks.forEach(a => {
+          a.classList.toggle('is-current', a.getAttribute('href') === `#${currentId}`);
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // B. Tactile cotton-paper light sheen following cursor on Lab & Publication cards
+      document.querySelectorAll('.sheen-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+          card.style.setProperty('--my', `${e.clientY - r.top}px`);
+        });
+      });
+
+      if (reduced || !('IntersectionObserver' in window)) return;
+
+      // C. Staggered editorial scroll reveals (also tags exp-rows & cred-cols)
+      document.querySelectorAll('.exp-row, .cred-col, .sec-head').forEach((el, idx) => {
+        el.classList.add('reveal');
+        if (el.classList.contains('cred-col')) el.style.transitionDelay = `${(idx % 3) * 0.08}s`;
+      });
+      document.documentElement.classList.add('js-reveal');
+
+      const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+      // D. Smooth ease-out count-up for the 4 monumental Impact Band numerals (plays once)
+      const countEls = Array.from(document.querySelectorAll('[data-count-target]'));
+      if (countEls.length) {
+        const countObs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            countObs.unobserve(el);
+            const target = parseFloat(el.dataset.countTarget);
+            const prefix = el.dataset.countPrefix || '';
+            const suffix = el.dataset.countSuffix || '';
+            const dec = parseInt(el.dataset.countDec || '0', 10);
+            const start = performance.now();
+            const dur = 1050;
+            function step(now) {
+              const u = Math.min(1, (now - start) / dur);
+              const eased = 1 - Math.pow(1 - u, 3);
+              const val = target * eased;
+              el.textContent = `${prefix}${val.toFixed(dec)}${suffix}`;
+              if (u < 1) requestAnimationFrame(step);
+              else el.textContent = `${prefix}${target.toFixed(dec)}${suffix}`;
+            }
+            requestAnimationFrame(step);
+          });
+        }, { threshold: 0.35 });
+        countEls.forEach(el => countObs.observe(el));
+      }
+    })();
   </script>
 </body>
 </html>
