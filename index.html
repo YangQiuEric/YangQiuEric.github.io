@@ -1570,23 +1570,23 @@
     </div>
   </div>
 
-  <!-- 03. COMPACT 4-PILLAR IMPACT RIBBON (TIKTOK · TENCENT · RESEARCH · KAGGLE) -->
+  <!-- 03. COMPACT 4-PILLAR FOCUS & CREDENTIALS RIBBON -->
   <section class="impact-band">
     <canvas class="impact-bg-canvas" id="impactSilkCanvas" aria-hidden="true"></canvas>
     <div class="container">
       <div class="impact-grid">
         <a class="impact-cell reveal" href="#experience">
           <div class="impact-tag">TikTok · RecSys</div>
-          <div class="impact-num" data-count-prefix="+" data-count-target="35" data-count-suffix="%" data-count-dec="0">+35%</div>
-          <div class="impact-title">Post-Search Query Coverage</div>
-          <p class="impact-detail">~3× cold-start · +1.43% publishes</p>
+          <div class="impact-num" style="font-size: 44px; padding-top: 6px;">Full-Stack</div>
+          <div class="impact-title">U.S. Info Photo-Text</div>
+          <p class="impact-detail">Retrieval · Ranking · Cold-Start</p>
         </a>
 
         <a class="impact-cell reveal" href="#experience" style="transition-delay: 0.08s;">
           <div class="impact-tag">Tencent · Safety</div>
-          <div class="impact-num" data-count-prefix="+" data-count-target="9" data-count-suffix="%" data-count-dec="0">+9%</div>
-          <div class="impact-title">Harmful-Content Detection</div>
-          <p class="impact-detail">Millions msgs/day · −9.83% review</p>
+          <div class="impact-num" style="font-size: 44px; padding-top: 6px;">Real-Time</div>
+          <div class="impact-title">LLM &amp; Graph Systems</div>
+          <p class="impact-detail">Multi-Stage Filter · Fraud Detection</p>
         </a>
 
         <a class="impact-cell reveal" href="#research" style="transition-delay: 0.16s;">
@@ -1600,7 +1600,7 @@
           <div class="impact-tag">Kaggle · Honors</div>
           <div class="impact-num" data-count-prefix="Top " data-count-target="6" data-count-suffix="%" data-count-dec="0">Top 6%</div>
           <div class="impact-title">Silver &amp; Bronze Medals</div>
-          <p class="impact-detail">30/573 GNSS · 135/1548 GI Tract</p>
+          <p class="impact-detail">GNSS Decimeter · GI Tract</p>
         </a>
       </div>
     </div>
@@ -1645,26 +1645,16 @@
             <div class="chip-group">
               <span class="stack-chip">Two-Tower</span>
               <span class="stack-chip">HNSW</span>
-              <span class="stack-chip">Attention</span>
+              <span class="stack-chip">Long-Seq Attention</span>
+              <span class="stack-chip">Uplift Modeling</span>
               <span class="stack-chip">PyTorch</span>
             </div>
           </div>
           <div>
             <h3 class="exp-role">Recommendation Algorithm Engineer</h3>
-            <p class="exp-lead">
-              Full recommendation stack for TikTok’s U.S. informational photo-text ecosystem.
+            <p class="exp-lead" style="margin-bottom: 14px;">
+              Working end to end across the recommendation stack for TikTok’s U.S. informational photo-text ecosystem — spanning retrieval, pre-ranking, ranking, multi-format mixing, vertical cold-start, and creator-side experience. Technical focus includes real-time post-search recall, per-business HNSW indexing over shared two-tower retrievers, long-sequence user-conditioned attention, and uplift-based value modeling.
             </p>
-            <ul class="exp-bullets">
-              <li>
-                <strong>Post-Search Recall:</strong> Built two-channel intent recall with real-time client passthrough (40+ min → sec), driving <span class="kpi-pill">+35% query coverage</span> and +14.5% comment/play.
-              </li>
-              <li>
-                <strong>Publish Attribution &amp; Uplift:</strong> Modeled 1K-length watch histories with user-conditioned attention (+0.9% AUC) and marginal uplift, lifting <span class="kpi-pill lilac">+1.43% proactive publishes/user</span>.
-              </li>
-              <li>
-                <strong>Vertical Cold-Start:</strong> Co-designed per-business HNSW retrieval and value targets over a shared two-tower backbone, achieving <span class="kpi-pill blue">~3× posts at 1K/1h</span> (~19% higher publishing efficiency than generic cold start).
-              </li>
-            </ul>
 
             <!-- Open-by-default Interactive System Architecture Diagram (Smoothly Collapsible) -->
             <div class="arch-details is-open" id="archAccordion">
@@ -1684,7 +1674,7 @@
                 <div class="domain-row" id="domainRow">
                   <div class="domain-box is-active" data-stage="0">
                     <div class="domain-title">Two-Channel Recall</div>
-                    <div class="domain-sub">Fresh Intent vs. Long-Term</div>
+                    <div class="domain-sub">Intent vs. Long-Term</div>
                     <div class="loop-badge" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
                         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
@@ -1694,7 +1684,7 @@
                   </div>
                   <div class="domain-box" data-stage="1">
                     <div class="domain-title">Per-Business HNSW</div>
-                    <div class="domain-sub">Shared Two-Tower · 65K Pilot</div>
+                    <div class="domain-sub">Shared Two-Tower</div>
                     <div class="loop-badge" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
                         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
@@ -1703,7 +1693,7 @@
                     </div>
                   </div>
                   <div class="domain-box" data-stage="2">
-                    <div class="domain-title">1K-Seq Attribution</div>
+                    <div class="domain-title">Sequence Attribution</div>
                     <div class="domain-sub">User-Conditioned Attention</div>
                     <div class="loop-badge" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
@@ -1714,7 +1704,7 @@
                   </div>
                   <div class="domain-box" data-stage="3">
                     <div class="domain-title">Marginal Uplift</div>
-                    <div class="domain-sub">P(pub|h+g) − P(pub|h)</div>
+                    <div class="domain-sub">Incremental Value Modeling</div>
                     <div class="loop-badge" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#241e1b" stroke-width="1.9" stroke-linecap="round">
                         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
@@ -1729,30 +1719,30 @@
                   <div class="arch-panel is-active">
                     <div>
                       <div class="arch-detail-kicker">Post-Search Recall</div>
-                      <div class="arch-detail-text">Real-time query passthrough separating fresh search intent from long-term interests (40+ min → sec).</div>
+                      <div class="arch-detail-text">Unified query and behavior triggers with real-time client passthrough separating fresh search intent from long-term interest generalization.</div>
                     </div>
-                    <div class="arch-detail-kpi">+35% query cov</div>
+                    <div class="arch-detail-kpi">Real-Time Recall</div>
                   </div>
                   <div class="arch-panel">
                     <div>
                       <div class="arch-detail-kicker">Vertical Cold-Start</div>
-                      <div class="arch-detail-text">Co-designed per-business HNSW indexes over a shared two-tower retriever with business-level targets.</div>
+                      <div class="arch-detail-text">Co-designed per-business HNSW indexes over a shared two-tower retriever with business-level ratio control and dedicated ranking targets.</div>
                     </div>
-                    <div class="arch-detail-kpi">~3× 1K views/1h</div>
+                    <div class="arch-detail-kpi">Cold-Start Infra</div>
                   </div>
                   <div class="arch-panel">
                     <div>
-                      <div class="arch-detail-kicker">1K-Seq Attribution</div>
-                      <div class="arch-detail-text">User-conditioned attention over 1K-length watch histories replacing noisy last-watched credit.</div>
+                      <div class="arch-detail-kicker">Sequence Attribution</div>
+                      <div class="arch-detail-text">Long-horizon user-conditioned attention over watch histories modeling creator inspiration and implicit publishing attribution.</div>
                     </div>
-                    <div class="arch-detail-kpi">+0.9% AUC</div>
+                    <div class="arch-detail-kpi">Sequence Modeling</div>
                   </div>
                   <div class="arch-panel">
                     <div>
                       <div class="arch-detail-kicker">Marginal Uplift</div>
-                      <div class="arch-detail-text">Incremental value objective P(pub|h+g) − P(pub|h) to better incentivize low-frequency creators.</div>
+                      <div class="arch-detail-text">Incremental uplift value objective balancing creator growth, content discovery, and long-term user experience.</div>
                     </div>
-                    <div class="arch-detail-kpi">+1.43% publishes</div>
+                    <div class="arch-detail-kpi">Value Modeling</div>
                   </div>
                 </div>
 
@@ -1805,14 +1795,9 @@
           </div>
           <div>
             <h3 class="exp-role">Data Scientist, Intern</h3>
-            <ul class="exp-bullets">
-              <li>
-                <strong>Real-Time Content Filter (PUBG):</strong> Rebuilt a 3-stage filter (Aho-Corasick → XGBoost → fine-tuned Hunyuan LLM) serving millions of messages/day at <span class="kpi-pill">+9% harmful-content detection</span>.
-              </li>
-              <li>
-                <strong>Graph Fraud Detection:</strong> Shipped HITS propagation and extended Fraudar for review abuse, cutting manual review rate by <span class="kpi-pill lilac">−9.83%</span>.
-              </li>
-            </ul>
+            <p class="exp-lead" style="margin-bottom: 0;">
+              Built real-time content moderation and graph-based trust &amp; safety systems for PUBG’s gaming ecosystem — combining a multi-stage filtering pipeline (Aho-Corasick prefix trees, TF-IDF + XGBoost, and a fine-tuned Hunyuan LLM) with HITS label propagation and weighted Fraudar graph algorithms for fraudulent review detection.
+            </p>
           </div>
         </article>
       </div>
