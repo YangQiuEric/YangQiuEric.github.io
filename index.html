@@ -280,54 +280,188 @@
       transform: translateY(-1px);
     }
 
-    /* Mobile Hamburger Button */
+    /* Mobile Hamburger Button (Silky 3-Bar -> X Morph + Tactile Press) */
     .menu-toggle {
       display: none;
       width: 40px;
       height: 40px;
-      border-radius: 6px;
-      border: 1px solid rgba(36, 30, 27, 0.28);
-      background: rgba(255, 255, 255, 0.35);
+      border-radius: 8px;
+      border: 1px solid rgba(36, 30, 27, 0.24);
+      background: rgba(255, 255, 255, 0.42);
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--ink);
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.32s ease,
+                  transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .menu-toggle:active {
+      transform: scale(0.92);
+    }
+
+    .menu-toggle.is-open {
+      background: var(--espresso);
+      color: var(--paper);
+      border-color: var(--espresso);
+    }
+
+    .menu-bars {
+      width: 16px;
+      height: 12px;
+      position: relative;
+      display: block;
+    }
+
+    .menu-bar {
+      position: absolute;
+      left: 0;
+      width: 16px;
+      height: 1.75px;
+      border-radius: 2px;
+      background: currentColor;
+      transform-origin: center;
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.22s ease,
+                  width 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .menu-bar:nth-child(1) { top: 0; }
+    .menu-bar:nth-child(2) { top: 5.125px; width: 12px; left: 4px; }
+    .menu-bar:nth-child(3) { top: 10.25px; }
+
+    .menu-toggle.is-open .menu-bar:nth-child(1) {
+      transform: translateY(5.125px) rotate(45deg);
+    }
+
+    .menu-toggle.is-open .menu-bar:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .menu-toggle.is-open .menu-bar:nth-child(3) {
+      transform: translateY(-5.125px) rotate(-45deg);
+    }
+
+    /* Floating Zero-Reflow Frosted Mobile Sheet + Soft Dim Backdrop */
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 55;
+      background: rgba(36, 30, 27, 0.24);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mobile-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .mobile-drawer {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 62;
       display: grid;
       grid-template-rows: 0fr;
       opacity: 0;
-      border-top: 1px solid transparent;
-      background: var(--paper);
-      transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-                  opacity 0.28s ease,
-                  border-color 0.28s ease;
+      pointer-events: none;
+      background: rgba(248, 244, 236, 0.98);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid transparent;
+      box-shadow: 0 22px 44px -16px rgba(36, 30, 27, 0);
+      transform: translateY(-6px);
+      transition: grid-template-rows 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.42s ease;
     }
 
     .mobile-drawer.is-open {
       grid-template-rows: 1fr;
       opacity: 1;
-      border-top-color: rgba(36, 30, 27, 0.16);
+      pointer-events: auto;
+      transform: translateY(0);
+      border-bottom-color: rgba(36, 30, 27, 0.18);
+      box-shadow: 0 24px 48px -16px rgba(36, 30, 27, 0.20);
     }
 
-    .mobile-drawer-inner {
+    .mobile-drawer-clip {
+      min-height: 0;
       overflow: hidden;
-      padding: 0 24px;
-      transition: padding 0.36s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .mobile-drawer.is-open .mobile-drawer-inner {
-      padding: 18px 24px 24px;
+    .mobile-drawer-content {
+      padding: 14px 24px 24px;
     }
 
     .mobile-nav-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      margin-bottom: 18px;
-      font-size: 16px;
-      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .mobile-nav-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 4px;
+      border-bottom: var(--rule-light);
+      font-family: var(--serif);
+      font-size: 21px;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.2s ease,
+                  padding-left 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mobile-nav-list a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-nav-list a:active {
+      color: var(--plum-text);
+      padding-left: 10px;
+    }
+
+    .mobile-nav-left {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .mobile-nav-idx {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--terracotta-text);
+      letter-spacing: 0.06em;
+    }
+
+    .mobile-nav-arrow {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--ink-subtle);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+    }
+
+    .mobile-nav-list a:hover .mobile-nav-arrow,
+    .mobile-nav-list a:active .mobile-nav-arrow {
+      transform: translateX(3px);
+      color: var(--plum-text);
     }
 
     .mobile-nav-actions {
@@ -335,8 +469,18 @@
       flex-wrap: wrap;
       gap: 10px;
       padding-top: 14px;
-      border-top: var(--rule-light);
+      border-top: var(--rule-strong);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
     }
+
+    .mobile-drawer.is-open .mobile-nav-list a:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.04s; }
+    .mobile-drawer.is-open .mobile-nav-list a:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+    .mobile-drawer.is-open .mobile-nav-list a:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+    .mobile-drawer.is-open .mobile-nav-list a:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.16s; }
+    .mobile-drawer.is-open .mobile-nav-actions { opacity: 1; transform: translateY(0); transition-delay: 0.20s; }
 
     /* ---------- HERO (FULL-BLEED EDGE-TO-EDGE 50/50 IMMERSIVE SPLIT) ---------- */
     .hero {
@@ -1522,31 +1666,46 @@
       </div>
 
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="4" y1="7" x2="20" y2="7" />
-          <line x1="4" y1="12" x2="20" y2="12" />
-          <line x1="4" y1="17" x2="20" y2="17" />
-        </svg>
+        <span class="menu-bars" aria-hidden="true">
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+        </span>
       </button>
     </div>
 
-    <!-- Mobile Navigation Drawer -->
-    <div class="mobile-drawer" id="mobileDrawer">
-      <div class="mobile-drawer-inner">
-        <div class="mobile-nav-list">
-          <a href="#experience" onclick="closeDrawer()">Experience</a>
-          <a href="#research" onclick="closeDrawer()">Research &amp; Publications</a>
-          <a href="#education" onclick="closeDrawer()">Education &amp; Honors</a>
-          <a href="#contact" onclick="closeDrawer()">Contact</a>
-        </div>
-        <div class="mobile-nav-actions">
-          <button class="btn btn-dark" onclick="copyEmail(); closeDrawer();">Copy Email</button>
-          <a class="btn btn-outline" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <!-- Floating Frosted Mobile Navigation Sheet -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+      <div class="mobile-drawer-clip">
+        <div class="mobile-drawer-content">
+          <div class="mobile-nav-list">
+            <a href="#experience" onclick="closeDrawer()">
+              <span class="mobile-nav-left"><span class="mobile-nav-idx">01</span><span>Experience</span></span>
+              <span class="mobile-nav-arrow">→</span>
+            </a>
+            <a href="#research" onclick="closeDrawer()">
+              <span class="mobile-nav-left"><span class="mobile-nav-idx">02</span><span>Research &amp; Publications</span></span>
+              <span class="mobile-nav-arrow">→</span>
+            </a>
+            <a href="#education" onclick="closeDrawer()">
+              <span class="mobile-nav-left"><span class="mobile-nav-idx">03</span><span>Education &amp; Honors</span></span>
+              <span class="mobile-nav-arrow">→</span>
+            </a>
+            <a href="#contact" onclick="closeDrawer()">
+              <span class="mobile-nav-left"><span class="mobile-nav-idx">04</span><span>Contact</span></span>
+              <span class="mobile-nav-arrow">→</span>
+            </a>
+          </div>
+          <div class="mobile-nav-actions">
+            <button class="btn btn-dark" onclick="copyEmail(); closeDrawer();">Copy Email</button>
+            <a class="btn btn-outline" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
         </div>
       </div>
     </div>
     <div class="scroll-progress" id="scrollProgress"></div>
   </header>
+  <div class="mobile-backdrop" id="mobileBackdrop" aria-hidden="true"></div>
 
   <!-- 01. HERO (FULL-BLEED EDGE-TO-EDGE 50/50 IMMERSIVE SPLIT) -->
   <section class="hero">
@@ -2073,16 +2232,34 @@
   <script>
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-    // 1. Mobile Navigation Drawer
+    // 1. Silky Mobile Navigation Sheet + Morphing Hamburger Toggle
     const menuToggle = document.getElementById('menuToggle');
     const mobileDrawer = document.getElementById('mobileDrawer');
-    function closeDrawer() {
-      mobileDrawer?.classList.remove('is-open');
-      menuToggle?.setAttribute('aria-expanded', 'false');
+    const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+    function setDrawerOpen(open) {
+      mobileDrawer?.classList.toggle('is-open', open);
+      mobileDrawer?.setAttribute('aria-hidden', String(!open));
+      menuToggle?.classList.toggle('is-open', open);
+      menuToggle?.setAttribute('aria-expanded', String(open));
+      mobileBackdrop?.classList.toggle('is-open', open);
     }
+
+    function closeDrawer() {
+      setDrawerOpen(false);
+    }
+
     menuToggle?.addEventListener('click', () => {
-      const open = mobileDrawer.classList.toggle('is-open');
-      menuToggle.setAttribute('aria-expanded', String(open));
+      const next = !mobileDrawer?.classList.contains('is-open');
+      setDrawerOpen(next);
+    });
+
+    mobileBackdrop?.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024) closeDrawer();
     });
 
     // 2. Hero Pure Living 2D Pastel Topography
