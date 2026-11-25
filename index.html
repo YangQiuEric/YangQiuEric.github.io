@@ -18,10 +18,13 @@
   <meta property="og:image" content="https://yangqiueric.com/og-preview.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Eric (Yang) Qiu — Recommendation Algorithm Engineer personal site preview" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Eric (Yang) Qiu — Recommendation Algorithm Engineer" />
   <meta name="twitter:description" content="End-to-end retrieval, ranking &amp; value modeling. TikTok · Incoming Moloco · UC San Diego · UW–Madison." />
   <meta name="twitter:image" content="https://yangqiueric.com/og-preview.png" />
+  <meta name="twitter:image:alt" content="Eric (Yang) Qiu — Recommendation Algorithm Engineer personal site preview" />
+  <meta name="theme-color" content="#f3ede2" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,6 +32,7 @@
     "name": "Yang Qiu",
     "alternateName": ["Eric Qiu", "Eric (Yang) Qiu", "Yang (Eric) Qiu"],
     "url": "https://yangqiueric.com/",
+    "email": "mailto:ericqiuyang99@gmail.com",
     "jobTitle": "Recommendation Algorithm Engineer",
     "worksFor": {
       "@type": "Organization",
@@ -44,12 +48,14 @@
         "name": "University of Wisconsin–Madison"
       }
     ],
+    "knowsAbout": ["Recommender Systems", "Information Retrieval", "Learning to Rank", "Uplift Modeling", "Machine Learning", "Deep Learning"],
     "sameAs": [
       "https://www.linkedin.com/in/yang-qiu-14465719a/"
     ]
   }
   </script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23a9cef5'/%3E%3Cstop offset='100%25' stop-color='%23cbbff4'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23d7bce8'/%3E%3Cstop offset='100%25' stop-color='%23f3bba8'/%3E%3C/linearGradient%3E%3ClinearGradient id='g3' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f8c399'/%3E%3Cstop offset='100%25' stop-color='%23feebd0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M18.8 3.2C26.4 3.4 33 8.8 33.2 16.8C33.4 24.8 27.6 32.4 18.4 32.8C9.8 33.2 2.8 27.8 2.8 19.2C2.8 10.6 10.6 3 18.8 3.2Z' fill='url(%23g1)' stroke='%23241e1b' stroke-opacity='0.42' stroke-width='1.1'/%3E%3Cpath d='M19.2 7.4C24.8 7.6 29.2 11.6 29.1 17.6C29 23.6 24.4 28.6 18.2 28.6C12 28.6 7.4 24.4 7.6 18.6C7.8 12.6 13.2 7.2 19.2 7.4Z' fill='url(%23g2)' stroke='%23241e1b' stroke-opacity='0.46' stroke-width='1.05'/%3E%3Cpath d='M19.2 11.6C22.8 11.8 25.4 14.6 25.2 18.4C25 22.2 22 25 18.2 24.8C14.4 24.6 11.8 21.8 12 18.2C12.2 14.4 15.4 11.4 19.2 11.6Z' fill='url(%23g3)' stroke='%23241e1b' stroke-opacity='0.52' stroke-width='1'/%3E%3Cpath d='M19.1 15.2C20.9 15.3 22.2 16.7 22 18.6C21.8 20.5 20.3 21.8 18.5 21.6C16.7 21.4 15.5 20.1 15.7 18.3C15.9 16.4 17.3 15.1 19.1 15.2Z' fill='%23fff6e6' stroke='%23241e1b' stroke-opacity='0.58' stroke-width='0.95'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -114,6 +120,17 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--plum-text);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    footer :focus-visible,
+    .impact-band :focus-visible {
+      outline-color: var(--peach-soft);
     }
 
     .container {
@@ -492,7 +509,8 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       width: 100%;
-      min-height: max(580px, calc(100vh - 160px));
+      min-height: max(580px, calc(100vh - 178px));
+      min-height: max(580px, calc(100svh - 178px));
     }
 
     .hero-art {
@@ -630,13 +648,15 @@
                   transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .affil-logos:hover .affil-item {
-      opacity: 0.42;
-    }
+    @media (hover: hover) {
+      .affil-logos:hover .affil-item {
+        opacity: 0.42;
+      }
 
-    .affil-logos .affil-item:hover {
-      opacity: 1;
-      transform: translateY(-2px);
+      .affil-logos .affil-item:hover {
+        opacity: 1;
+        transform: translateY(-2px);
+      }
     }
 
     /* ---------- PENTAGRAM EDITORIAL REVEAL & TACTILE HOVER MOTION ---------- */
@@ -657,12 +677,15 @@
     .reveal {
       transition: opacity 0.68s cubic-bezier(0.22, 1, 0.36, 1),
                   transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform;
     }
 
     .js-reveal .reveal {
       opacity: 0;
       transform: translateY(18px);
+    }
+
+    .js-reveal .reveal:not(.is-visible) {
+      will-change: opacity, transform;
     }
 
     .js-reveal .reveal.is-visible {
@@ -734,6 +757,7 @@
       border-radius: 50%;
       background: var(--plum-text);
       display: inline-block;
+      flex-shrink: 0;
       margin-right: 10px;
       box-shadow: 0 0 0 0 rgba(106, 77, 118, 0.45);
       animation: softPulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
@@ -767,6 +791,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
       .hero-copy > *, .reveal, .arch-pulse-dot { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
     }
 
@@ -983,6 +1008,7 @@
     .exp-role {
       font-family: var(--serif);
       font-style: italic;
+      font-weight: 400;
       font-size: 25px;
       color: var(--plum-text);
       margin-bottom: 12px;
@@ -1282,6 +1308,7 @@
     .lab-title {
       font-family: var(--serif);
       font-size: 24px;
+      font-weight: 400;
       line-height: 1.2;
       margin-bottom: 10px;
       color: var(--ink);
@@ -1411,12 +1438,16 @@
       align-items: center;
       gap: 4px;
       white-space: nowrap;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
+      padding: 10px 0;
+      margin: -10px 0;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s ease;
     }
 
     .pub-link:hover {
-      border-bottom-color: var(--plum-text);
+      text-decoration-color: var(--plum-text);
     }
 
     /* ---------- EDUCATION, HONORS & TOOLKIT ---------- */
@@ -1541,6 +1572,11 @@
       color: var(--ink-on-dark-muted);
     }
 
+    .footer-links a {
+      padding: 10px 0;
+      margin: -10px 0;
+    }
+
     .footer-links a:hover {
       color: var(--peach-soft);
     }
@@ -1591,15 +1627,20 @@
       .exp-row,
       .labs-grid,
       .pubs-grid,
-      .cred-3col,
-      .domain-row {
+      .cred-3col {
         grid-template-columns: 1fr;
       }
+      .domain-row { grid-template-columns: repeat(2, 1fr); gap: 12px 10px; margin-bottom: 18px; }
+      .domain-box { padding: 12px 8px 18px; }
+      .domain-title { font-size: 16px; line-height: 1.2; }
+      .domain-sub { font-size: 11px; line-height: 1.35; }
+      .arch-glide-bar { display: none; }
+      .arch-summary-hint { white-space: nowrap; }
       .hero-grid { border-left: none; border-right: none; min-height: auto; }
       .hero-grid > div { min-width: 0; }
       .eyebrow { align-items: flex-start; line-height: 1.45; font-size: 10.5px; }
       .eyebrow-dot { flex-shrink: 0; margin-top: 5px; }
-      .hero-art { min-height: 360px; border-right: none; border-bottom: var(--rule-light); }
+      .hero-art { min-height: 260px; min-height: clamp(220px, 32svh, 300px); border-right: none; border-bottom: var(--rule-light); }
       .hero-copy { padding: 40px 24px 48px; }
       .affil-inner { flex-direction: column; align-items: flex-start; gap: 18px; }
       .affil-logos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 24px; width: 100%; max-width: none; }
@@ -1617,6 +1658,44 @@
       }
       .cred-col:last-child { border-bottom: none; }
       .footer-right { align-items: flex-start; }
+    }
+
+    /* ---------- PHONE (<=640px): editorial index rows + compact architecture ---------- */
+    @media (max-width: 640px) {
+      .impact-band { padding: 18px 0 20px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .impact-cell,
+      .impact-cell:first-child,
+      .impact-cell:last-child,
+      .impact-cell:nth-last-child(-n+2) {
+        display: grid;
+        grid-template-columns: 148px minmax(0, 1fr);
+        column-gap: 16px;
+        align-items: start;
+        padding: 18px 0;
+        border-right: none;
+        border-bottom: var(--rule-dark);
+      }
+      .impact-cell:last-child { border-bottom: none; }
+      .impact-tag { grid-column: 1 / -1; margin-bottom: 8px; }
+      .impact-num {
+        grid-column: 1;
+        grid-row: 2 / span 2;
+        font-size: 30px;
+        white-space: nowrap;
+        margin-bottom: 0;
+      }
+      .impact-title { grid-column: 2; padding-top: 3px; }
+      .impact-detail { grid-column: 2; text-wrap: balance; }
+
+      .arch-summary { padding: 14px 16px; }
+      .arch-summary-long { display: none; }
+      .arch-body { padding: 16px 14px 18px; }
+      .arch-venn-sub { display: none; }
+      .arch-venn-title { font-size: 28px; }
+      .arch-venn-l { transform: translate(-22px, 8px); }
+      .arch-venn-r { transform: translate(22px, 8px); }
+      .arch-venn-core { font-size: 26px; }
     }
   </style>
 </head>
@@ -1662,7 +1741,7 @@
         <a class="icon-btn" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4V9z"/></svg>
         </a>
-        <button class="btn btn-dark" onclick="copyEmail()">Email</button>
+        <a class="btn btn-dark js-email" href="mailto:ericqiuyang99@gmail.com">Email</a>
       </div>
 
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1675,7 +1754,7 @@
     </div>
 
     <!-- Floating Frosted Mobile Navigation Sheet -->
-    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true" inert>
       <div class="mobile-drawer-clip">
         <div class="mobile-drawer-content">
           <div class="mobile-nav-list">
@@ -1697,7 +1776,7 @@
             </a>
           </div>
           <div class="mobile-nav-actions">
-            <button class="btn btn-dark" onclick="copyEmail(); closeDrawer();">Copy Email</button>
+            <a class="btn btn-dark js-email" href="mailto:ericqiuyang99@gmail.com" onclick="closeDrawer()">Email</a>
             <a class="btn btn-outline" href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
           </div>
         </div>
@@ -1730,7 +1809,7 @@
         </p>
         <div class="hero-actions">
           <a href="#experience" class="btn btn-dark">Explore Experience</a>
-          <button class="btn btn-outline" onclick="copyEmail()">Copy Email</button>
+          <a class="btn btn-outline js-email" href="mailto:ericqiuyang99@gmail.com">Email Me</a>
         </div>
       </div>
     </div>
@@ -1822,13 +1901,10 @@
               <span>Moloco</span>
               <span class="tag-incoming">Incoming · Jan 2027</span>
             </div>
-            <div class="exp-meta">Menlo Park, CA · Starting Jan 2027</div>
+            <div class="exp-meta">Menlo Park, CA</div>
           </div>
           <div>
-            <h3 class="exp-role">Machine Learning Engineer</h3>
-            <p class="exp-lead" style="margin-bottom: 0;">
-              Joining Moloco in Menlo Park starting January 2027.
-            </p>
+            <h3 class="exp-role" style="margin-bottom: 0;">Machine Learning Engineer</h3>
           </div>
         </article>
 
@@ -1856,7 +1932,7 @@
               <button type="button" class="arch-summary" id="archToggleBtn" aria-expanded="true" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit;">
                 <span style="display: inline-flex; align-items: center;">
                   <span class="arch-pulse-dot" aria-hidden="true"></span>
-                  <span>Interactive System Architecture — TikTok U.S. Recommendation Stack</span>
+                  <span>Interactive System Architecture<span class="arch-summary-long"> — TikTok U.S. Recommendation Stack</span></span>
                 </span>
                 <span class="arch-summary-hint">
                   <span id="archToggleLabel">Hide diagram</span>
@@ -1867,7 +1943,7 @@
                 <div class="arch-expand-inner">
                   <div class="arch-body">
                 <div class="domain-row" id="domainRow">
-                  <div class="domain-box is-active" data-stage="0">
+                  <div class="domain-box is-active" data-stage="0" role="button" tabindex="0" aria-pressed="true">
                     <div class="domain-title">Two-Channel Recall</div>
                     <div class="domain-sub">Intent vs. Long-Term</div>
                     <div class="loop-badge" aria-hidden="true">
@@ -1877,7 +1953,7 @@
                       </svg>
                     </div>
                   </div>
-                  <div class="domain-box" data-stage="1">
+                  <div class="domain-box" data-stage="1" role="button" tabindex="0" aria-pressed="false">
                     <div class="domain-title">Per-Business HNSW</div>
                     <div class="domain-sub">Shared Two-Tower</div>
                     <div class="loop-badge" aria-hidden="true">
@@ -1887,7 +1963,7 @@
                       </svg>
                     </div>
                   </div>
-                  <div class="domain-box" data-stage="2">
+                  <div class="domain-box" data-stage="2" role="button" tabindex="0" aria-pressed="false">
                     <div class="domain-title">Sequence Attribution</div>
                     <div class="domain-sub">User-Conditioned Attention</div>
                     <div class="loop-badge" aria-hidden="true">
@@ -1897,7 +1973,7 @@
                       </svg>
                     </div>
                   </div>
-                  <div class="domain-box" data-stage="3">
+                  <div class="domain-box" data-stage="3" role="button" tabindex="0" aria-pressed="false">
                     <div class="domain-title">Marginal Uplift</div>
                     <div class="domain-sub">Incremental Value Modeling</div>
                     <div class="loop-badge" aria-hidden="true">
@@ -1955,19 +2031,19 @@
                   <circle cx="430" cy="62" r="2.3" fill="#241e1b" fill-opacity="0.7" />
                   <g id="ellLeftGroup" class="ellipse-left">
                     <ellipse cx="265" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.7" stroke-width="1.1" fill="#f8f4ec" fill-opacity="0.55" />
-                    <text x="205" y="109" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="22" fill="#241e1b">Deep Learning Models</text>
-                    <text x="205" y="131" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#4a413b">Two-Tower · Attention · Uplift · Multi-Obj Fusion</text>
+                    <text x="205" y="109" text-anchor="middle" font-family="Newsreader, Georgia, serif" class="arch-venn-title arch-venn-l" font-size="22" fill="#241e1b">Deep Learning Models</text>
+                    <text x="205" y="131" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" class="arch-venn-sub" font-size="12" fill="#4a413b">Two-Tower · Attention · Uplift · Multi-Obj Fusion</text>
                   </g>
                   <g id="ellRightGroup" class="ellipse-right">
                     <ellipse cx="595" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.7" stroke-width="1.1" fill="#f8f4ec" fill-opacity="0.55" />
-                    <text x="655" y="109" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="22" fill="#241e1b">Retrieval &amp; Serving Infra</text>
-                    <text x="655" y="131" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#4a413b">HNSW Indexes · PyTorch · Spark · A/B</text>
+                    <text x="655" y="109" text-anchor="middle" font-family="Newsreader, Georgia, serif" class="arch-venn-title arch-venn-r" font-size="22" fill="#241e1b">Retrieval &amp; Serving Infra</text>
+                    <text x="655" y="131" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" class="arch-venn-sub" font-size="12" fill="#4a413b">HNSW Indexes · PyTorch · Spark · A/B</text>
                   </g>
                   <ellipse cx="595" cy="116" rx="235" ry="72" fill="url(#overlapWash)" clip-path="url(#clipLeftEllipse)" />
                   <ellipse cx="265" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.65" stroke-width="1.05" fill="none" />
                   <ellipse cx="595" cy="116" rx="235" ry="72" stroke="#241e1b" stroke-opacity="0.65" stroke-width="1.05" fill="none" />
-                  <text x="430" y="113" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="19" font-style="italic" fill="#241e1b">Core ML</text>
-                  <text x="430" y="130" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#241e1b">END-TO-END</text>
+                  <text x="430" y="113" text-anchor="middle" font-family="Newsreader, Georgia, serif" class="arch-venn-core" font-size="19" font-style="italic" fill="#241e1b">Core ML</text>
+                  <text x="430" y="130" text-anchor="middle" font-family="IBM Plex Mono, monospace" class="arch-venn-sub" font-size="10" fill="#241e1b">END-TO-END</text>
                 </svg>
                   </div>
                 </div>
@@ -2091,7 +2167,7 @@
             </div>
             <div class="pub-foot">
               <span><strong>Qiu Y.</strong>, Wu M., Huang Q.</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=Do+You+Know+Your+Neighborhood+Integrating+Street+View+Images+and+Multi-task+Learning" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Do+You+Know+Your+Neighborhood+Integrating+Street+View+Images+and+Multi-task+Learning" target="_blank" rel="noopener" aria-label="Search for this paper (opens in a new tab)">Find Paper <span class="arrow-ne" aria-hidden="true">↗</span></a>
             </div>
           </article>
 
@@ -2105,7 +2181,7 @@
             </div>
             <div class="pub-foot">
               <span><strong>Qiu Y.</strong>, et al.</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=Development+of+a+Voice-Enabled+Automated+Sleep+Survey+System+Qiu" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Development+of+a+Voice-Enabled+Automated+Sleep+Survey+System+Qiu" target="_blank" rel="noopener" aria-label="Search for this paper (opens in a new tab)">Find Paper <span class="arrow-ne" aria-hidden="true">↗</span></a>
             </div>
           </article>
 
@@ -2119,7 +2195,7 @@
             </div>
             <div class="pub-foot">
               <span><strong>Qiu Y.</strong> (Sole Author)</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=UPerNet-Based+Deep+Learning+Method+for+the+Segmentation+of+Gastrointestinal+Tract+Images" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=UPerNet-Based+Deep+Learning+Method+for+the+Segmentation+of+Gastrointestinal+Tract+Images" target="_blank" rel="noopener" aria-label="Search for this paper (opens in a new tab)">Find Paper <span class="arrow-ne" aria-hidden="true">↗</span></a>
             </div>
           </article>
 
@@ -2133,7 +2209,7 @@
             </div>
             <div class="pub-foot">
               <span><strong>Qiu Y.</strong>, Yan Y., Glide-Hurst C.</span>
-              <a class="pub-link" href="https://scholar.google.com/scholar?q=Deep+Learning+Methodology+to+Generate+Synthetic+CT+for+MR-Guided+Radiation+Therapy+in+the+Thorax" target="_blank" rel="noopener">DOI / Paper <span class="arrow-ne">↗</span></a>
+              <a class="pub-link" href="https://scholar.google.com/scholar?q=Deep+Learning+Methodology+to+Generate+Synthetic+CT+for+MR-Guided+Radiation+Therapy+in+the+Thorax" target="_blank" rel="noopener" aria-label="Search for this paper (opens in a new tab)">Find Paper <span class="arrow-ne" aria-hidden="true">↗</span></a>
             </div>
           </article>
         </div>
@@ -2213,7 +2289,7 @@
         </div>
         <div class="footer-right">
           <div class="footer-btn-row">
-            <button class="btn btn-peach" onclick="copyEmail()">Copy ericqiuyang99@gmail.com</button>
+            <a class="btn btn-peach js-email" href="mailto:ericqiuyang99@gmail.com">ericqiuyang99@gmail.com</a>
           </div>
           <div class="footer-links">
             <a href="https://www.linkedin.com/in/yang-qiu-14465719a/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -2240,6 +2316,7 @@
     function setDrawerOpen(open) {
       mobileDrawer?.classList.toggle('is-open', open);
       mobileDrawer?.setAttribute('aria-hidden', String(!open));
+      if (mobileDrawer) mobileDrawer.inert = !open;
       menuToggle?.classList.toggle('is-open', open);
       menuToggle?.setAttribute('aria-expanded', String(open));
       mobileBackdrop?.classList.toggle('is-open', open);
@@ -2411,7 +2488,10 @@
       function selectStage(idx) {
         if (idx === activeIdx) return;
         activeIdx = idx;
-        boxes.forEach((b, i) => b.classList.toggle('is-active', i === idx));
+        boxes.forEach((b, i) => {
+          b.classList.toggle('is-active', i === idx);
+          b.setAttribute('aria-pressed', String(i === idx));
+        });
         panels.forEach((p, i) => p.classList.toggle('is-active', i === idx));
         if (glideBar) glideBar.style.transform = `translateX(${idx * 100}%)`;
         if (ellLeft) ellLeft.style.opacity = EMPHASIS[idx].leftOp;
@@ -2420,17 +2500,41 @@
       boxes.forEach((box, idx) => {
         box.addEventListener('mouseenter', () => selectStage(idx));
         box.addEventListener('click', () => selectStage(idx));
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectStage(idx); }
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const next = (idx + (e.key === 'ArrowRight' ? 1 : boxes.length - 1)) % boxes.length;
+            boxes[next].focus();
+            selectStage(next);
+          }
+        });
       });
     })();
 
     const CONTACT_EMAIL = 'ericqiuyang99@gmail.com';
-    function copyEmail() {
-      navigator.clipboard?.writeText(CONTACT_EMAIL);
+    let toastTimer = null;
+    function showToast(msg) {
       const toast = document.getElementById('toast');
-      toast.textContent = `Copied ${CONTACT_EMAIL} to clipboard`;
+      if (!toast) return;
+      toast.textContent = msg;
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2200);
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
     }
+
+    // Desktop (fine pointer): copy address + confirm. Touch: native mailto opens the mail app.
+    // If copying fails for any reason, fall back to mailto instead of claiming success.
+    const prefersCopy = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    document.querySelectorAll('.js-email').forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (!prefersCopy || !navigator.clipboard || !window.isSecureContext) return;
+        e.preventDefault();
+        navigator.clipboard.writeText(CONTACT_EMAIL)
+          .then(() => showToast(`Copied ${CONTACT_EMAIL} to clipboard`))
+          .catch(() => { window.location.href = `mailto:${CONTACT_EMAIL}`; });
+      });
+    });
 
     // 4. Smooth Animated Architecture Accordion Toggle
     (function initArchAccordion() {
@@ -2565,12 +2669,14 @@
         for (let i = 0; i < curves; i++) {
           const frac = i / Math.max(1, curves - 1);
           ctx.beginPath();
-          for (let x = 0; x <= w; x += 22) {
+          for (let step = 0; ; step += 22) {
+            const x = Math.min(step, w);
             const nx = x / w;
             const y = h * (0.20 + frac * 0.64) +
               Math.sin(nx * 4.0 + t * 0.44 + i * 0.65 + phaseOffset) * 20 +
               Math.cos(nx * 2.4 - t * 0.34 + i * 0.42) * 13;
             if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            if (x >= w) break;
           }
           const g = ctx.createLinearGradient(0, 0, w, 0);
           g.addColorStop(0, 'rgba(244, 191, 162, 0.50)');
